@@ -1,7 +1,7 @@
 import pygame
-from object_scene import ObjectScene
 from enemy import Enemy
-
+from player import Player
+from position_player import PositionPlayer
 
 pygame.init()
 
@@ -25,8 +25,9 @@ clock = pygame.time.Clock()
 pygame.time.set_timer(pygame.USEREVENT, 2000)
 
 # Set up player
-player = ObjectScene(root, "player", 20, 20, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_SPEED)
-enemy = Enemy(root, "enemy", 100, 100, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_SPEED)
+position_player = PositionPlayer()
+player = Player(root, "player", 20, 20, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_SPEED, position_player)
+enemy = Enemy(root, "enemy", 100, 100, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_SPEED, position_player)
 
 launched = True
 while launched:
@@ -48,6 +49,7 @@ while launched:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT] and player.position_x > 0:
         player.move_left()
+        enemy.get_new_position()
     if keys[pygame.K_RIGHT] and player.position_x < ROOT_WIDTH - PLAYER_WIDTH:
         player.move_right()
     if keys[pygame.K_UP] and player.position_y > 0:
