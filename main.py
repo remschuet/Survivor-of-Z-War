@@ -1,21 +1,23 @@
 import pygame
 from object_scene import ObjectScene
+from enemy import Enemy
+
 
 pygame.init()
 
-WIDTH = 700
-HEIGHT = 500
+ROOT_WIDTH = 900
+ROOT_HEIGHT = 600
 
-position_x = 200
-position_y = 200
-player_width = 40
-player_height = 40
-speed = 2
+PLAYER_WIDTH = 80
+PLAYER_HEIGHT = 80
+PLAYER_SPEED = 2
 
 arial_font = pygame.font.SysFont("arial", 20)
 
-root = pygame.display.set_mode((WIDTH, HEIGHT))
+root = pygame.display.set_mode((ROOT_WIDTH, ROOT_HEIGHT))
 background_image = pygame.image.load("background_game.png")
+background_image = pygame.transform.scale(background_image, (ROOT_WIDTH, ROOT_HEIGHT))
+
 pygame.display.set_caption("Game")
 clock = pygame.time.Clock()
 
@@ -23,42 +25,48 @@ clock = pygame.time.Clock()
 pygame.time.set_timer(pygame.USEREVENT, 2000)
 
 # Set up player
-player = ObjectScene(root, 20, 20, player_width, player_height, speed)
+player = ObjectScene(root, "player", 20, 20, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_SPEED)
+enemy = Enemy(root, "enemy", 100, 100, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_SPEED)
 
 launched = True
 while launched:
+    # reset the screen to black
     root.fill((0, 0, 0))
 
-    # (fps)
+    # (fps) speed of the mouvement
     clock.tick(120)
 
     for event in pygame.event.get():
+        # quit the game
         if event.type == pygame.QUIT:
             launched = False
+        # for event every 2 sec
         elif event.type == pygame.USEREVENT:
             print("New enemy")
 
+    # mouvement
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT] and player.position_x > 0:
-        position_x -= speed
         player.move_left()
-    if keys[pygame.K_RIGHT] and player.position_x < WIDTH - player_width:
-        position_x += speed
+    if keys[pygame.K_RIGHT] and player.position_x < ROOT_WIDTH - PLAYER_WIDTH:
         player.move_right()
     if keys[pygame.K_UP] and player.position_y > 0:
-        position_y -= speed
         player.move_up()
-    if keys[pygame.K_DOWN] and player.position_y < HEIGHT - player_height:
-        position_y += speed
+    if keys[pygame.K_DOWN] and player.position_y < ROOT_HEIGHT - PLAYER_HEIGHT:
         player.move_down()
 
+    # display the background image to the root
     root.blit(background_image, [0, 0])
 
+    # display by draw players
+    enemy.draw()
     player.draw()
 
+    # display the fsp in the screen
     fps_text = arial_font.render(f"{int(clock.get_fps())} fps", True, (255, 255, 255))
-    root.blit(fps_text, [(WIDTH-70), 20])
+    root.blit(fps_text, [(ROOT_WIDTH - 70), 20])
 
+    # main loop
     pygame.display.update()
 
 pygame.quit()
