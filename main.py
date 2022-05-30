@@ -6,6 +6,7 @@ from position_environment import PositionEnvironment
 
 """
 for enemy in list
+    REFACTORING
     ajouter les enemy dans une list
     enemy qui ne se touche pas
     collision avec le joueur
