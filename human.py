@@ -14,11 +14,15 @@ class Human:
 
         prefix = str.lower(self.name_image)
 
+        # create image for everyone
         self.player_image = pygame.image.load(prefix+"_yellow_idle.png")
         self.player_image = pygame.transform.scale(self.player_image, (self.width, self.height))
 
+        # draw the human in the root
         self.draw()
 
     def draw(self):
+        # draw the rect using the position x, y, width, height
         pygame.draw.rect(self.root, (0, 0, 0), (self.position_x, self.position_y, self.width, self.height), 1)
+        # draw the image using the position x, y
         self.root.blit(self.player_image, (self.position_x, self.position_y))

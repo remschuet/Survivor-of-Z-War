@@ -50,6 +50,7 @@ class Enemy(Human):
         if self.player_position_y < self.position_y:
             self.move_up()
         # inform the dict the new position
+        self.set_new_positon()
 
     def set_new_positon(self):
         self.position_environment.set_new_position(self.name_id, self.position_x, self.position_y)
