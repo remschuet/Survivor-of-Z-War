@@ -2,6 +2,12 @@ import pygame
 from enemy import Enemy
 from player import Player
 from position_player import PositionPlayer
+from position_environment import PositionEnvironment
+
+"""
+for enemi in list
+"""
+
 
 pygame.init()
 
@@ -25,9 +31,11 @@ clock = pygame.time.Clock()
 pygame.time.set_timer(pygame.USEREVENT, 2000)
 
 # Set up player
-position_player = PositionPlayer()
-player = Player(root, "player", 20, 20, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_SPEED, position_player)
-enemy = Enemy(root, "enemy", 100, 100, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_SPEED, position_player)
+position_environment = PositionEnvironment()
+position_player = PositionPlayer(400, 250)
+player = Player(root, "player", "player", 400, 250, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_SPEED, position_player, position_environment)
+enemy = Enemy(root, "enemy", "enemy01", 100, 100, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_SPEED, position_player, position_environment)
+enemy02 = Enemy(root, "enemy", "enemy02", 400, 400, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_SPEED, position_player, position_environment)
 
 launched = True
 while launched:
@@ -45,23 +53,30 @@ while launched:
         elif event.type == pygame.USEREVENT:
             print("New enemy")
 
-    # mouvement
+    # player mouvement
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT] and player.position_x > 0:
         player.move_left()
-        enemy.get_new_position()
+
     if keys[pygame.K_RIGHT] and player.position_x < ROOT_WIDTH - PLAYER_WIDTH:
         player.move_right()
+
     if keys[pygame.K_UP] and player.position_y > 0:
         player.move_up()
+
     if keys[pygame.K_DOWN] and player.position_y < ROOT_HEIGHT - PLAYER_HEIGHT:
         player.move_down()
+
+    # enemy mouvement
+    enemy.movement()
+    enemy02.movement()
 
     # display the background image to the root
     root.blit(background_image, [0, 0])
 
     # display by draw players
     enemy.draw()
+    enemy02.draw()
     player.draw()
 
     # display the fsp in the screen
