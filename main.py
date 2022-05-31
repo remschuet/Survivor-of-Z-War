@@ -6,6 +6,7 @@ from position_environment import PositionEnvironment
 
 """
 for enemy in list
+
     REFACTORING
     ajouter les enemy dans une list
     enemy qui ne se touche pas
@@ -22,6 +23,9 @@ ROOT_HEIGHT = 600
 HUMAN_WIDTH = 80
 HUMAN_HEIGHT = 80
 HUMAN_SPEED = 2
+
+# create a list for the enemy
+enemy_list = []
 
 # create writing style
 arial_font = pygame.font.SysFont("arial", 20)
@@ -45,6 +49,7 @@ position_player = PositionPlayer(400, 250)
 player = Player(root, "player", "player", 400, 250, HUMAN_WIDTH, HUMAN_HEIGHT, HUMAN_SPEED, position_player, position_environment)
 enemy = Enemy(root, "enemy", "enemy01", 100, 100, HUMAN_WIDTH, HUMAN_HEIGHT, HUMAN_SPEED, position_player, position_environment)
 enemy02 = Enemy(root, "enemy", "enemy02", 400, 400, HUMAN_WIDTH, HUMAN_HEIGHT, HUMAN_SPEED, position_player, position_environment)
+# enemy_list.append(enemy)
 
 launched = True
 while launched:
@@ -89,7 +94,7 @@ while launched:
     player.draw()
 
     # display the fsp in the screen
-    fps_text = arial_font.render(f"{int(clock.get_fps())} fps", True, (255, 255, 255))
+    fps_text = arial_font.render(f"{int(clock.get_fps())} fps", True, (0, 0, 0))
     root.blit(fps_text, [(ROOT_WIDTH - 70), 20])
 
     # main loop
