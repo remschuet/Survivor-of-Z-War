@@ -1,15 +1,13 @@
 from human import Human
-from position_player import PositionPlayer
 from position_environment import PositionEnvironment
 
 
 class Enemy(Human):
-    def __init__(self, root, name_image: str, name_id: str, position_x: int, position_y: int, height: int, width: int, speed: int,
-                 position_player: PositionPlayer, position_environment: PositionEnvironment):
+    def __init__(self, root, name_image: str, name_id: str, position_x: int, position_y: int, height: int, width: int,
+                 speed: int, position_environment: PositionEnvironment):
         super().__init__(root, name_image, name_id, position_x, position_y, height, width, speed)
 
         # to can reach position of the player
-        self.position_player = position_player
         self.player_position_x = None
         self.player_position_y = None
 
@@ -35,7 +33,7 @@ class Enemy(Human):
 
     def get_new_position(self):
         # get position from position_player
-        self.player_position_x, self.player_position_y = self.position_player.get_position()
+        self.player_position_x, self.player_position_y = self.position_environment.get_position_player()
 
     def movement(self):
         # get the position

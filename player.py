@@ -1,11 +1,10 @@
 from human import Human
-from position_player import PositionPlayer
 from position_environment import PositionEnvironment
 
 
 class Player(Human):
-    def __init__(self, root, name_image: str, name_id: str, position_x: int, position_y: int, height: int, width: int, speed: int,
-                 position_player: PositionPlayer, position_environment: PositionEnvironment):
+    def __init__(self, root, name_image: str, name_id: str, position_x: int, position_y: int, height: int, width: int,
+                 speed: int, position_environment: PositionEnvironment):
         super().__init__(root, name_image, name_id, position_x, position_y, height, width, speed)
 
         # for position in dict
@@ -13,7 +12,6 @@ class Player(Human):
         self.position_environment.set_new_position(self.name_id, self.position_x, self.position_y)
 
         # inform position_player the x, y
-        self.position_player = position_player
         self.set_new_position()
 
     def move_left(self):
@@ -37,7 +35,7 @@ class Player(Human):
         self.set_new_position()
 
     def set_new_position(self):
-        self.position_player.set_new_position(self.position_x, self.position_y)
+        # self.position_player.set_new_position(self.position_x, self.position_y)
         self.position_environment.set_new_position(self.name_id, self.position_x, self.position_y)
         # print the dict
         self.position_environment.print_position_dict()

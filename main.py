@@ -1,7 +1,6 @@
 import pygame
 from enemy import Enemy
 from player import Player
-from position_player import PositionPlayer
 from position_environment import PositionEnvironment
 
 """
@@ -12,6 +11,7 @@ for enemy in list
     enemy qui ne se touche pas
     collision avec le joueur
     supprimer position_player
+    pas tout le temps key presse, mais desfois keyup
 """
 
 
@@ -26,6 +26,7 @@ HUMAN_SPEED = 2
 
 # create a list for the enemy
 enemy_list = []
+number_of_enemy = 0
 
 # create writing style
 arial_font = pygame.font.SysFont("arial", 20)
@@ -43,13 +44,9 @@ clock = pygame.time.Clock()
 # every 2 seconds
 pygame.time.set_timer(pygame.USEREVENT, 2000)
 
-# Set up human
+# Set up player
 position_environment = PositionEnvironment()
-position_player = PositionPlayer(400, 250)
-player = Player(root, "player", "player", 400, 250, HUMAN_WIDTH, HUMAN_HEIGHT, HUMAN_SPEED, position_player, position_environment)
-enemy = Enemy(root, "enemy", "enemy01", 100, 100, HUMAN_WIDTH, HUMAN_HEIGHT, HUMAN_SPEED, position_player, position_environment)
-enemy02 = Enemy(root, "enemy", "enemy02", 400, 400, HUMAN_WIDTH, HUMAN_HEIGHT, HUMAN_SPEED, position_player, position_environment)
-# enemy_list.append(enemy)
+player = Player(root, "player", "player", 400, 250, HUMAN_WIDTH, HUMAN_HEIGHT, HUMAN_SPEED, position_environment)
 
 launched = True
 while launched:
@@ -65,32 +62,44 @@ while launched:
             launched = False
         # for event every 2 sec
         elif event.type == pygame.USEREVENT:
-            print("New enemy")
+            number_of_enemy += 1
+            # create just 3 enemy
+            if number_of_enemy <= 3:
+                enemy_list.append(Enemy(root, "enemy", ("enemy"+str(number_of_enemy)), 50, 400,HUMAN_WIDTH,
+                                        HUMAN_HEIGHT, HUMAN_SPEED, position_environment))
 
     # player mouvement
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT] and player.position_x > 0:
         player.move_left()
-
     if keys[pygame.K_RIGHT] and player.position_x < ROOT_WIDTH - HUMAN_WIDTH:
         player.move_right()
-
     if keys[pygame.K_UP] and player.position_y > 0:
         player.move_up()
-
     if keys[pygame.K_DOWN] and player.position_y < ROOT_HEIGHT - HUMAN_HEIGHT:
         player.move_down()
+    if keys[pygame.K_1]:
+        # to can destroy an enemy
+        for item in enemy_list:
+            if isinstance(item, Enemy):
+                if item.name_id == "enemy1":
+                    enemy_list.remove(item)
+                    print(list)
 
-    # enemy mouvement
-    enemy.movement()
-    enemy02.movement()
+    # mouvement enemy
+    for item in enemy_list:
+        if isinstance(item, Enemy):
+            item.movement()
 
     # display the background image to the root
     root.blit(root_background_image, [0, 0])
 
-    # display by draw players
-    enemy.draw()
-    enemy02.draw()
+    # draw enemy
+    for item in enemy_list:
+        if isinstance(item, Enemy):
+            item.draw()
+
+    # draw player
     player.draw()
 
     # display the fsp in the screen
