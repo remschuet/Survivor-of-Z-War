@@ -16,3 +16,7 @@ class PositionEnvironment:
 
     def check_if_collision(self):
         print("here we check the collision human")
+
+    def destroy_enemy_in_list(self, name):
+        self.position_dic.pop(name)
+

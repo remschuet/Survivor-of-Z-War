@@ -4,14 +4,13 @@ from player import Player
 from position_environment import PositionEnvironment
 
 """
-for enemy in list
-
     REFACTORING
     ajouter les enemy dans une list
     enemy qui ne se touche pas
     collision avec le joueur
     supprimer position_player
-    pas tout le temps key presse, mais desfois keyup
+    pas tout le temps key press, mais des fois key up
+    Il y a une liste et un dictionnaire, problème de destruction et de collision
 """
 
 
@@ -80,24 +79,25 @@ while launched:
         player.move_down()
     if keys[pygame.K_1]:
         # to can destroy an enemy
-        for item in enemy_list:
-            if isinstance(item, Enemy):
-                if item.name_id == "enemy1":
-                    enemy_list.remove(item)
-                    print(list)
+        for enemy_item in enemy_list:
+            if isinstance(enemy_item, Enemy):
+                if enemy_item.name_id == "enemy1":
+                    enemy_list.remove(enemy_item)
+                    # destroy the position in position environment dict
+                    position_environment.destroy_enemy_in_list(enemy_item.name_id)
 
     # mouvement enemy
-    for item in enemy_list:
-        if isinstance(item, Enemy):
-            item.movement()
+    for enemy_item in enemy_list:
+        if isinstance(enemy_item, Enemy):
+            enemy_item.movement()
 
     # display the background image to the root
     root.blit(root_background_image, [0, 0])
 
     # draw enemy
-    for item in enemy_list:
-        if isinstance(item, Enemy):
-            item.draw()
+    for enemy_item in enemy_list:
+        if isinstance(enemy_item, Enemy):
+            enemy_item.draw()
 
     # draw player
     player.draw()
