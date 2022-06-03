@@ -93,8 +93,10 @@ class ManagementEnvironment:
         self.number_of_bullet += 1
         # search position player
         position_x, position_y = self.player.get_position()
+        # get direction of the playere
+        direction = self.player.get_direction()
         # create bullet
         self.bullet_list.append(
             Bullet(self.root, "bullet", ("bullet" + str(self.number_of_enemy)), position_x, position_y,
-                   20, 20, self.HUMAN_SPEED, self.position_environment))
+                   20, 20, self.HUMAN_SPEED, self.position_environment, direction))
         print("create bullet")
