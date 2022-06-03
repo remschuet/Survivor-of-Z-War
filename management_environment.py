@@ -27,8 +27,8 @@ class ManagementEnvironment:
 
     def call_every_2_sec(self):
         self.number_of_enemy += 1
-        # create just 3 enemy
-        if self.number_of_enemy <= 3:
+        # create just 2 enemy
+        if self.number_of_enemy <= 2:
             self.enemy_list.append(Enemy(self.root, "enemy", ("enemy" + str(self.number_of_enemy)), 50, 400, self.HUMAN_WIDTH,
                                          self.HUMAN_HEIGHT, self.HUMAN_SPEED, self.position_environment))
 
@@ -42,18 +42,23 @@ class ManagementEnvironment:
         if keys[pygame.K_DOWN] and self.player.position_y < self.ROOT_HEIGHT - self.HUMAN_HEIGHT:
             self.player.move_down()
         if keys[pygame.K_1]:
-            # to can destroy an enemy
-            for enemy_item in self.enemy_list:
-                if isinstance(enemy_item, Enemy):
-                    if enemy_item.name_id == "enemy1":
-                        self.enemy_list.remove(enemy_item)
-                        # destroy the position in position environment dict
-                        self.position_environment.destroy_enemy_in_list(enemy_item.name_id)
+            self.destroy_enemy()
+
+    def destroy_enemy(self):
+        # to can destroy an enemy
+        for enemy_item in self.enemy_list:
+            if isinstance(enemy_item, Enemy):
+                if enemy_item.name_id == "enemy1":
+                    self.enemy_list.remove(enemy_item)
+                    # destroy the position in position environment dict
+                    self.position_environment.destroy_enemy_in_dict(enemy_item.name_id)
 
     def enemy_mouvement(self):
         for enemy_item in self.enemy_list:
             if isinstance(enemy_item, Enemy):
                 enemy_item.movement()
+            else:
+                print("Nothing")
 
     def draw_human_and_fps(self, clock):
         # enemy

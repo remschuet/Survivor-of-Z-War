@@ -9,7 +9,7 @@ class Player(Human):
 
         # for position in dict
         self.position_environment = position_environment
-        self.position_environment.set_new_position(self.name_id, self.position_x, self.position_y)
+        self.position_environment.set_new_position(self.name_id, self.position_x, self.position_y, self.width, self.height)
 
         # inform position_player the x, y
         self.set_new_position()
@@ -36,6 +36,6 @@ class Player(Human):
 
     def set_new_position(self):
         # self.position_player.set_new_position(self.position_x, self.position_y)
-        self.position_environment.set_new_position(self.name_id, self.position_x, self.position_y)
+        self.position_environment.set_new_position(self.name_id, self.position_x, self.position_y, self.width, self.height)
         # print the dict
         self.position_environment.print_position_dict()
