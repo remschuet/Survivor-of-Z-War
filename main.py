@@ -50,16 +50,27 @@ while launched:
             launched = False
         # for event every 2 sec
         elif event.type == pygame.USEREVENT:
-            management_environment.call_every_2_sec()
+            management_environment.create_enemy_every_2_sec()
+        # to can shoot
+        elif event.type == pygame.KEYUP:
+            if event.key == pygame.K_3:
+                print("YEAHHHHH")
+                management_environment.shoot_bullet()
+
+
 
     # player mouvement
-    keys = pygame.key.get_pressed() # Pourrait servir à rediriger vers une fonction
-    if keys:
-        management_environment.key_pressed(keys)
+    keys_pressed = pygame.key.get_pressed()
+    # keys_up = pygame.key.K_UP()
+    if keys_pressed:
+        management_environment.key_pressed(keys_pressed)
 
+    # if keys_up:
+    #     management_environment.key_up(keys_up)
 
     # mouvement enemy
     management_environment.enemy_mouvement()
+    management_environment.bullet_mouvement()
 
 
     # display the background image to the root

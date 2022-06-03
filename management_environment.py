@@ -2,6 +2,7 @@ import pygame
 from player import Player
 from enemy import Enemy
 from position_environment import PositionEnvironment
+from bullet import Bullet
 
 
 class ManagementEnvironment:
@@ -20,12 +21,17 @@ class ManagementEnvironment:
         self.enemy_list = []
         self.number_of_enemy = 0
 
+        # create a list for the bullet
+        self.bullet_list = []
+        self.number_of_bullet = 0
+
         # Set up player
         self.position_environment = PositionEnvironment()
         self.player = Player(root, "player", "player", 400, 250,
                              self.HUMAN_WIDTH, self.HUMAN_HEIGHT, self.HUMAN_SPEED, self.position_environment)
 
-    def call_every_2_sec(self):
+    def create_enemy_every_2_sec(self):
+        # create enemy
         self.number_of_enemy += 1
         # create just 2 enemy
         if self.number_of_enemy <= 2:
@@ -44,6 +50,9 @@ class ManagementEnvironment:
         if keys[pygame.K_1]:
             self.destroy_enemy()
 
+    def shoot_bullet(self):
+        self.create_bullet()
+
     def destroy_enemy(self):
         # to can destroy an enemy
         for enemy_item in self.enemy_list:
@@ -60,7 +69,16 @@ class ManagementEnvironment:
             else:
                 print("Nothing")
 
+    def bullet_mouvement(self):
+        for bullet_item in self.bullet_list:
+            if isinstance(bullet_item, Bullet):
+                bullet_item.movement()
+
     def draw_human_and_fps(self, clock):
+        # bullet
+        for bullet_item in self.bullet_list:
+            if isinstance(bullet_item, Bullet):
+                bullet_item.draw()
         # enemy
         for enemy_item in self.enemy_list:
             if isinstance(enemy_item, Enemy):
@@ -70,3 +88,13 @@ class ManagementEnvironment:
         # display the fsp in the screen
         fps_text = self.arial_font.render(f"{int(clock.get_fps())} fps", True, (0, 0, 0))
         self.root.blit(fps_text, [(self.ROOT_WIDTH - 70), 20])
+
+    def create_bullet(self):
+        self.number_of_bullet += 1
+        # search position player
+        position_x, position_y = self.player.get_position()
+        # create bullet
+        self.bullet_list.append(
+            Bullet(self.root, "bullet", ("bullet" + str(self.number_of_enemy)), position_x, position_y,
+                   20, 20, self.HUMAN_SPEED, self.position_environment))
+        print("create bullet")
