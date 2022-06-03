@@ -1,8 +1,8 @@
-from human import Human
+from object import Object
 from position_environment import PositionEnvironment
 
 
-class Enemy(Human):
+class Enemy(Object):
     def __init__(self, root, name_image: str, name_id: str, position_x: int, position_y: int, height: int, width: int,
                  speed: int, position_environment: PositionEnvironment):
         super().__init__(root, name_image, name_id, position_x, position_y, height, width, speed)
