@@ -1,12 +1,12 @@
 import pygame
-from management_environment import ManagementEnvironment
+from management_gameplay_environment import ManagementEnvironment
 
 
 class ManagementCanvas:
-    def __init__(self, root, clock, launched):
+    def __init__(self, root, clock, launched: bool, ROOT_WIDTH: int, ROOT_HEIGHT: int):
 
-        self.ROOT_WIDTH = 900
-        self.ROOT_HEIGHT = 600
+        self.ROOT_WIDTH = ROOT_WIDTH
+        self.ROOT_HEIGHT = ROOT_HEIGHT
         self.HUMAN_WIDTH = 80
         self.HUMAN_HEIGHT = 80
         self.HUMAN_SPEED = 2
@@ -21,8 +21,12 @@ class ManagementCanvas:
         self.management_environment = ManagementEnvironment(root, self.HUMAN_WIDTH, self.HUMAN_HEIGHT,
                                                             self.HUMAN_SPEED, self.ROOT_WIDTH, self.ROOT_HEIGHT)
 
-    def get_if_quit(self):
-        return self.launched
+    def call_every_frame(self):
+        self.check_event_key()
+        self.management_mouvement()
+        # check if player died
+        self.management_player_alive_or_not()
+        self.draw_background_and_fps()
 
     def check_event_key(self):
         for event in pygame.event.get():
@@ -39,18 +43,19 @@ class ManagementCanvas:
 
         # player mouvement
         keys_pressed = pygame.key.get_pressed()
-
         # keys_up = pygame.key.K_UP()
         if keys_pressed:
             self.management_environment.key_pressed(keys_pressed)
 
+    def management_mouvement(self):
         # mouvement enemy
         self.management_environment.enemy_mouvement()
         self.management_environment.bullet_mouvement()
 
-        # check if player died
+    def management_player_alive_or_not(self):
         self.management_environment.check_if_end_game()
 
+    def draw_background_and_fps(self):
         # display the background image to the root
         self.root.blit(self.root_background_image, [0, 0])
 
