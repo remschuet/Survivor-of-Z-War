@@ -54,13 +54,15 @@ class ManagementEnvironment:
         self.create_bullet()
 
     def destroy_enemy(self):
+        # take the list with the name of enemy we need to destroy
         list_to_destroy = self.position_environment.get_list_of_enemy_to_destroy()
-        # print(list_to_destroy)
+        # take all the name in enemy list
         for enemy_item in self.enemy_list:
             if isinstance(enemy_item, Enemy):
-                for item in list_to_destroy:
-                    if enemy_item.name_id == item:
-                        print("yeah, ça marche")
+                # take name in list to destroy
+                for item_name_to_destroy in list_to_destroy:
+                    if enemy_item.name_id == item_name_to_destroy:
+                        # remove item fro the enemy_list
                         self.enemy_list.remove(enemy_item)
                         # destroy the position in position environment dict
                         self.position_environment.destroy_enemy_in_dict(enemy_item.name_id)
