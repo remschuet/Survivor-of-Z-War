@@ -11,14 +11,13 @@ class Bullet(Object):
 
         self.speed = 3
         self.direction = direction
+        self.printname()
+
+    def printname(self):
+        print(self.name_id)
 
     def movement(self):
-        # check if collision
-        # if self.position_environment.check_if_collision(self.name_id, self.position_x, self.position_y, self.width,
-        #                                                 self.height):
-        #    print("collision")
-
-        # move to the player position x, y
+        # move from the player position x, y
         if self.direction == "left":
             self.position_x = self.position_x - 10
 

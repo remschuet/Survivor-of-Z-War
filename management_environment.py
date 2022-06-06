@@ -31,12 +31,12 @@ class ManagementEnvironment:
                              self.HUMAN_WIDTH, self.HUMAN_HEIGHT, self.HUMAN_SPEED, self.position_environment)
 
     def create_enemy_every_2_sec(self):
-        # create enemy
         self.number_of_enemy += 1
-        # create just 2 enemy
-        if self.number_of_enemy <= 2:
-            self.enemy_list.append(Enemy(self.root, "enemy", ("enemy" + str(self.number_of_enemy)), 50, 400, self.HUMAN_WIDTH,
-                                         self.HUMAN_HEIGHT, self.HUMAN_SPEED, self.position_environment))
+        # create enemy
+        if self.number_of_enemy <= 10:
+            self.enemy_list.append(Enemy(self.root, "enemy", ("enemy" + str(self.number_of_enemy)), 50, 400,
+                                         self.HUMAN_WIDTH, self.HUMAN_HEIGHT,
+                                         self.HUMAN_SPEED, self.position_environment))
 
     def key_pressed(self, keys):
         if keys[pygame.K_LEFT] and self.player.position_x > 0:
@@ -47,8 +47,6 @@ class ManagementEnvironment:
             self.player.move_up()
         if keys[pygame.K_DOWN] and self.player.position_y < self.ROOT_HEIGHT - self.HUMAN_HEIGHT:
             self.player.move_down()
-        # if keys[pygame.K_1]:
-        #     self.destroy_enemy("enemy1")
 
     def shoot_bullet(self):
         self.create_bullet()
@@ -66,6 +64,14 @@ class ManagementEnvironment:
                         self.enemy_list.remove(enemy_item)
                         # destroy the position in position environment dict
                         self.position_environment.destroy_enemy_in_dict(enemy_item.name_id)
+
+        list_bullet = self.position_environment.get_list_of_bullet_to_destroy()
+        for bullet_item in self.bullet_list:
+            if isinstance(bullet_item, Bullet):
+                for item_name_to_destroy in list_bullet:
+                    if bullet_item.name_id == item_name_to_destroy:
+                        self.bullet_list.remove(bullet_item)
+                        self.position_environment.destroy_enemy_in_dict(bullet_item.name_id)
 
     def enemy_mouvement(self):
         for enemy_item in self.enemy_list:
@@ -89,14 +95,8 @@ class ManagementEnvironment:
             if isinstance(enemy_item, Enemy):
                 enemy_item.draw()
 
+        # check if we need to destroy an enemy
         self.destroy_enemy()
-        # list = self.position_environment.get_list_of_enemy_to_destroy()
-        # if list:
-        #     for item in list:
-        #         if item == str:
-        #             self.destroy_enemy(item)
-        #             print(list)
-            # self.destroy_enemy(enemy_name_id)
 
         # player
         self.player.draw()
@@ -108,10 +108,10 @@ class ManagementEnvironment:
         self.number_of_bullet += 1
         # search position player
         position_x, position_y = self.player.get_position()
-        # get direction of the playere
+        # get direction of the players
         direction = self.player.get_direction()
         # create bullet
         self.bullet_list.append(
-            Bullet(self.root, "bullet", ("bullet" + str(self.number_of_enemy)), position_x, position_y,
+            Bullet(self.root, "bullet", ("bullet" + str(self.number_of_bullet)), position_x, position_y,
                    20, 20, self.HUMAN_SPEED, self.position_environment, direction))
         print("create bullet")

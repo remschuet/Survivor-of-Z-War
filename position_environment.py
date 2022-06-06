@@ -4,7 +4,11 @@ class PositionEnvironment:
         self.human_bullet_position_dic = {}
         # create a list who tell management environment to destroy enemy
         self.enemy_need_to_destroy = []
-        self.human_bullet_name = None
+        self.bullet_need_to_destroy = []
+        self.human_or_bullet_name = None
+
+    def get_list_of_bullet_to_destroy(self):
+        return self.bullet_need_to_destroy
 
     def get_list_of_enemy_to_destroy(self):
         return self.enemy_need_to_destroy
@@ -24,18 +28,19 @@ class PositionEnvironment:
         self.human_bullet_position_dic.pop(name)
 
     def check_if_collision(self, name_id, position_x, position_y, width, height):
-        for self.human_bullet_name, (x, y, w, h) in self.human_bullet_position_dic.items():
-            if name_id != self.human_bullet_name and self.human_bullet_name != "enemy1" and self.human_bullet_name != "enemy2":
+        for self.human_or_bullet_name, (x, y, w, h) in self.human_bullet_position_dic.items():
+            # to can take all the enemy
+            all_number_to_100 = str(list(range(1, 100)))
+            if name_id != self.human_or_bullet_name and self.human_or_bullet_name != "enemy"+all_number_to_100:
                 if position_x + width >= x and \
                         position_x <= x + w and \
                         position_y + height >= y and \
                         position_y <= y + h:
                     # Return name of the object in collision not the player
                     self.enemy_need_to_destroy.clear()
+                    self.bullet_need_to_destroy.clear()
+                    # put the enemy in a list
                     self.enemy_need_to_destroy.append(name_id)
-                    # print("collision")
-                    # print(self.enemy_need_to_destroy)
-                    # if self.human_bullet_name == "bullet1":
-                    # self.destroy_enemy_in_dict(name)
-                    return self.human_bullet_name
+                    self.bullet_need_to_destroy.append(self.human_or_bullet_name)
+                    return self.human_or_bullet_name
         return False
