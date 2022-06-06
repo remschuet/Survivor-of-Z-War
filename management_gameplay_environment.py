@@ -50,7 +50,9 @@ class ManagementEnvironment:
 
     def check_if_end_game(self):
         if not self.position_environment.get_player_alive_or_not():
-            print("game over")
+            return False
+        else:
+            return True
 
     def shoot_bullet(self):
         self.create_bullet()

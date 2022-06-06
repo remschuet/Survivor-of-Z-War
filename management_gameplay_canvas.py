@@ -3,7 +3,7 @@ from management_gameplay_environment import ManagementEnvironment
 
 
 class ManagementCanvas:
-    def __init__(self, root, clock, launched: bool, ROOT_WIDTH: int, ROOT_HEIGHT: int):
+    def __init__(self, root, clock, launched: bool, canvas_gameplay: bool, ROOT_WIDTH: int, ROOT_HEIGHT: int):
 
         self.ROOT_WIDTH = ROOT_WIDTH
         self.ROOT_HEIGHT = ROOT_HEIGHT
@@ -14,6 +14,7 @@ class ManagementCanvas:
         self.root = root
         self.clock = clock
         self.launched = launched
+        self.canvas_gameplay = canvas_gameplay
 
         self.root_background_image = pygame.image.load("background_game.png")
         self.root_background_image = pygame.transform.scale(self.root_background_image, (self.ROOT_WIDTH, self.ROOT_HEIGHT))
@@ -53,7 +54,8 @@ class ManagementCanvas:
         self.management_environment.bullet_mouvement()
 
     def management_player_alive_or_not(self):
-        self.management_environment.check_if_end_game()
+        if not self.management_environment.check_if_end_game():
+            print("player died")
 
     def draw_background_and_fps(self):
         # display the background image to the root

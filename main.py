@@ -10,6 +10,9 @@ from management_gameplay_canvas import ManagementCanvas
     Mettre le fusil ready à chaque seconde
     dessin de carte avec des murs et des entrées pour les enemy
     MANAGEMENT CANVAS
+    
+    Combien de class?
+    
 """
 
 pygame.init()
@@ -34,7 +37,7 @@ canvas_menu = False
 canvas_gameplay = True
 
 launched = True
-management_canvas = ManagementCanvas(root, clock, launched, ROOT_WIDTH, ROOT_HEIGHT)
+management_canvas = ManagementCanvas(root, clock, launched, canvas_gameplay, ROOT_WIDTH, ROOT_HEIGHT)
 while launched:
     # reset the screen to black
     root.fill((0, 0, 0))
@@ -47,9 +50,11 @@ while launched:
         launched = management_canvas.launched
         # check the event in management canvas
         management_canvas.call_every_frame()
-    elif canvas_menu:
-        print("We are in the menu")
+    if not canvas_gameplay:
+        canvas_menu = True
 
+    if canvas_menu:
+        print("We are in the menu")
     # main loop
     pygame.display.update()
 
