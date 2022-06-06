@@ -3,13 +3,12 @@ from management_environment import ManagementEnvironment
 
 """
     REFACTORING
-    détruire un enemy avec des balle
-    timer pour les balles
-    il y a une liste et un dictionnaire, problème de destruction et de collision
-    essayer avec une autre fonction qui récupèrent les bullet en mouvement et qui peut les détruire
-        ou détruire les bullets sur une distance et non au toucher
-    mettre un system de point de vie
+    timer pour les balles, avec un temps en seconde
+    mettre un maximum de balle dans le fusil
+    mettre un system de point de vie visuel
     Mettre le fusil ready à chaque seconde
+    dessin de carte avec des murs et des entrées pour les enemy
+    MANAGEMENT CANVAS
 """
 
 pygame.init()
@@ -36,6 +35,8 @@ pygame.time.set_timer(pygame.USEREVENT, 1000)
 
 management_environment = ManagementEnvironment(root, HUMAN_WIDTH, HUMAN_HEIGHT, HUMAN_SPEED, ROOT_WIDTH, ROOT_HEIGHT)
 
+gameplay = True
+
 launched = True
 while launched:
     # reset the screen to black
@@ -43,35 +44,38 @@ while launched:
 
     # (fps) speed of the mouvement
     clock.tick(120)
+    if gameplay:
+        for event in pygame.event.get():
+            # quit the game
+            if event.type == pygame.QUIT:
+                launched = False
+            # for event every 2 sec
+            elif event.type == pygame.USEREVENT:
+                management_environment.create_enemy_every_2_sec()
+            # to can shoot
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_3:
+                    management_environment.shoot_bullet()
 
-    for event in pygame.event.get():
-        # quit the game
-        if event.type == pygame.QUIT:
-            launched = False
-        # for event every 2 sec
-        elif event.type == pygame.USEREVENT:
-            management_environment.create_enemy_every_2_sec()
-        # to can shoot
-        elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_3:
-                management_environment.shoot_bullet()
+        # player mouvement
+        keys_pressed = pygame.key.get_pressed()
 
-    # player mouvement
-    keys_pressed = pygame.key.get_pressed()
+        # keys_up = pygame.key.K_UP()
+        if keys_pressed:
+            management_environment.key_pressed(keys_pressed)
 
-    # keys_up = pygame.key.K_UP()
-    if keys_pressed:
-        management_environment.key_pressed(keys_pressed)
+        # mouvement enemy
+        management_environment.enemy_mouvement()
+        management_environment.bullet_mouvement()
 
-    # mouvement enemy
-    management_environment.enemy_mouvement()
-    management_environment.bullet_mouvement()
+        # check if player died
+        management_environment.check_if_end_game()
 
-    # display the background image to the root
-    root.blit(root_background_image, [0, 0])
+        # display the background image to the root
+        root.blit(root_background_image, [0, 0])
 
-    # draw enemy
-    management_environment.draw_human_and_fps(clock)
+        # draw enemy
+        management_environment.draw_human_and_fps(clock)
 
     # main loop
     pygame.display.update()

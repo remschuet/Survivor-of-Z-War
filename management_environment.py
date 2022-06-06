@@ -48,6 +48,10 @@ class ManagementEnvironment:
         if keys[pygame.K_DOWN] and self.player.position_y < self.ROOT_HEIGHT - self.HUMAN_HEIGHT:
             self.player.move_down()
 
+    def check_if_end_game(self):
+        if not self.position_environment.get_player_alive_or_not():
+            print("game over")
+
     def shoot_bullet(self):
         self.create_bullet()
 

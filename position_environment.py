@@ -6,6 +6,18 @@ class PositionEnvironment:
         self.enemy_need_to_destroy = []
         self.bullet_need_to_destroy = []
         self.human_or_bullet_name = None
+        # to check if he died
+        self.player_pv = 3
+        self.player_alive = True
+
+    def manage_player_pv(self):
+        if self.player_pv > 0:
+            self.player_pv -= 1
+        elif self.player_pv <= 0:
+            self.player_alive = False
+
+    def get_player_alive_or_not(self):
+        return self.player_alive
 
     def get_list_of_bullet_to_destroy(self):
         return self.bullet_need_to_destroy
@@ -42,5 +54,8 @@ class PositionEnvironment:
                     # put the enemy in a list
                     self.enemy_need_to_destroy.append(name_id)
                     self.bullet_need_to_destroy.append(self.human_or_bullet_name)
+                    # check collision with player
+                    if self.human_or_bullet_name == "player":
+                        self.manage_player_pv()
                     return self.human_or_bullet_name
         return False
