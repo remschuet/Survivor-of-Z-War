@@ -45,7 +45,7 @@ class Player(Object):
         # self.position_player.set_new_position(self.position_x, self.position_y)
         self.position_environment.set_new_position(self.name_id, self.position_x, self.position_y, self.width, self.height)
         # print the dict
-        self.position_environment.print_position_dict()
+        # self.position_environment.print_position_dict()
 
     def get_position(self):
         return self.position_x, self.position_y

@@ -3,12 +3,9 @@ from management_environment import ManagementEnvironment
 
 """
     REFACTORING
-    ajouter les enemy dans une list
-    enemy qui ne se touche pas
-    collision avec le joueur
-    supprimer position_player
-    pas tout le temps key press, mais des fois key up
-    Il y a une liste et un dictionnaire, problème de destruction et de collision
+    détruire un enemy avec des balle
+    timer pour les balles
+    il y a une liste et un dictionnaire, problème de destruction et de collision
 """
 
 

@@ -47,20 +47,23 @@ class ManagementEnvironment:
             self.player.move_up()
         if keys[pygame.K_DOWN] and self.player.position_y < self.ROOT_HEIGHT - self.HUMAN_HEIGHT:
             self.player.move_down()
-        if keys[pygame.K_1]:
-            self.destroy_enemy()
+        # if keys[pygame.K_1]:
+        #     self.destroy_enemy("enemy1")
 
     def shoot_bullet(self):
         self.create_bullet()
 
     def destroy_enemy(self):
-        # to can destroy an enemy
+        list_to_destroy = self.position_environment.get_list_of_enemy_to_destroy()
+        # print(list_to_destroy)
         for enemy_item in self.enemy_list:
             if isinstance(enemy_item, Enemy):
-                if enemy_item.name_id == "enemy1":
-                    self.enemy_list.remove(enemy_item)
-                    # destroy the position in position environment dict
-                    self.position_environment.destroy_enemy_in_dict(enemy_item.name_id)
+                for item in list_to_destroy:
+                    if enemy_item.name_id == item:
+                        print("yeah, ça marche")
+                        self.enemy_list.remove(enemy_item)
+                        # destroy the position in position environment dict
+                        self.position_environment.destroy_enemy_in_dict(enemy_item.name_id)
 
     def enemy_mouvement(self):
         for enemy_item in self.enemy_list:
@@ -83,6 +86,16 @@ class ManagementEnvironment:
         for enemy_item in self.enemy_list:
             if isinstance(enemy_item, Enemy):
                 enemy_item.draw()
+
+        self.destroy_enemy()
+        # list = self.position_environment.get_list_of_enemy_to_destroy()
+        # if list:
+        #     for item in list:
+        #         if item == str:
+        #             self.destroy_enemy(item)
+        #             print(list)
+            # self.destroy_enemy(enemy_name_id)
+
         # player
         self.player.draw()
         # display the fsp in the screen
