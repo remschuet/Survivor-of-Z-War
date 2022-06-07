@@ -1,3 +1,5 @@
+import random
+
 import pygame
 from player import Player
 from enemy import Enemy
@@ -30,12 +32,19 @@ class ManagementEnvironment:
         self.player = Player(root, "player", "player", 400, 250,
                              self.HUMAN_WIDTH, self.HUMAN_HEIGHT, self.HUMAN_SPEED, self.position_environment)
 
+    def random_position_of_enemy(self):
+        list = [(0, 300), (450, 0), (900, 300), (450, 600)]
+        x, y = random.choice(list)
+        return x, y
+
     def create_enemy_every_2_sec(self):
         self.number_of_enemy += 1
+        # random position
+        position_x, position_y = self.random_position_of_enemy()
         # create enemy
-        if self.number_of_enemy <= 10:
-            self.enemy_list.append(Enemy(self.root, "enemy", ("enemy" + str(self.number_of_enemy)), 50, 400,
-                                         self.HUMAN_WIDTH, self.HUMAN_HEIGHT,
+        if self.number_of_enemy <= 20:
+            self.enemy_list.append(Enemy(self.root, "enemy", ("enemy" + str(self.number_of_enemy)),
+                                         position_x, position_y, self.HUMAN_WIDTH, self.HUMAN_HEIGHT,
                                          self.HUMAN_SPEED, self.position_environment))
 
     def key_pressed(self, keys):

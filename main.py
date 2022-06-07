@@ -8,9 +8,7 @@ from management_canvas import ManagementCanvas
     mettre un system de point de vie visuel
     Mettre le fusil ready à chaque seconde
     dessin de carte avec des murs et des entrées pour les enemy
-    MANAGEMENT CANVAS
-    
-    Combien de class?
+    bouger les enemy sur le menu
     
 """
 
@@ -28,12 +26,8 @@ pygame.display.set_caption("Game")
 # create the clock (timer)
 clock = pygame.time.Clock()
 
-# every 2 seconds
+# call every in milliseconds
 pygame.time.set_timer(pygame.USEREVENT, 1000)
-
-# canvas_menu = False
-
-# canvas_gameplay = True
 
 launched = True
 management_canvas = ManagementCanvas(root, clock, launched, ROOT_WIDTH, ROOT_HEIGHT)
