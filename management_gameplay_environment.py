@@ -83,8 +83,6 @@ class ManagementEnvironment:
         for enemy_item in self.enemy_list:
             if isinstance(enemy_item, Enemy):
                 enemy_item.movement()
-            else:
-                print("Nothing")
 
     def bullet_mouvement(self):
         for bullet_item in self.bullet_list:

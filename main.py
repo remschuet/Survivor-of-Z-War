@@ -1,6 +1,5 @@
 import pygame
-from management_gameplay_environment import ManagementEnvironment
-from management_gameplay_canvas import ManagementCanvas
+from management_canvas import ManagementCanvas
 
 """
     REFACTORING
@@ -32,12 +31,12 @@ clock = pygame.time.Clock()
 # every 2 seconds
 pygame.time.set_timer(pygame.USEREVENT, 1000)
 
-canvas_menu = False
+# canvas_menu = False
 
-canvas_gameplay = True
+# canvas_gameplay = True
 
 launched = True
-management_canvas = ManagementCanvas(root, clock, launched, canvas_gameplay, ROOT_WIDTH, ROOT_HEIGHT)
+management_canvas = ManagementCanvas(root, clock, launched, ROOT_WIDTH, ROOT_HEIGHT)
 while launched:
     # reset the screen to black
     root.fill((0, 0, 0))
@@ -45,16 +44,12 @@ while launched:
     # (fps) speed of the mouvement
     clock.tick(120)
 
-    if canvas_gameplay:
-        # verify if the game is launch
-        launched = management_canvas.launched
-        # check the event in management canvas
-        management_canvas.call_every_frame()
-    if not canvas_gameplay:
-        canvas_menu = True
+    # verify if the game is launch
+    launched = management_canvas.launched
 
-    if canvas_menu:
-        print("We are in the menu")
+    # check the event in management canvas
+    management_canvas.call_every_frame()
+
     # main loop
     pygame.display.update()
 
