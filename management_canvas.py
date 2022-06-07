@@ -11,6 +11,12 @@ class ManagementCanvas:
         self.HUMAN_SPEED = 2
 
         self.management_environment = None
+        self.spawn_speed = False
+        self.USEREVENT_timer = 0
+        self.timer_create_enemy = 1000
+
+        # call every in milliseconds
+        pygame.time.set_timer(pygame.USEREVENT, self.timer_create_enemy)
 
         self.root_gameplay = False
         self.root_menu = True
@@ -62,9 +68,11 @@ class ManagementCanvas:
             # quit the game
             if event.type == pygame.QUIT:
                 self.launched = False
-            # for event every 2 sec
+
+            # create enemy with clock timer
             elif event.type == pygame.USEREVENT:
-                self.management_environment.create_enemy_every_2_sec()
+                self.call_every_2_seconds()
+
             # to can shoot
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_3:
@@ -75,6 +83,18 @@ class ManagementCanvas:
         # keys_up = pygame.key.K_UP()
         if keys_pressed:
             self.management_environment.key_pressed(keys_pressed)
+
+    def call_every_2_seconds(self):
+        self.USEREVENT_timer += 1
+        self.spawn_speed = False
+        # if timer is multiply of 5 update new timer
+        # if self.USEREVENT_timer % 5 == 0:
+        # self.timer_create_enemy -= 300
+        # re create timer with an other variable
+        # pygame.time.set_timer(pygame.USEREVENT, self.timer_create_enemy)
+
+        self.management_environment.create_enemy_every_2_sec()
+
 
     def management_mouvement(self):
         # mouvement enemy

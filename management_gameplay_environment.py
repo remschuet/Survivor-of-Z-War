@@ -25,7 +25,8 @@ class ManagementEnvironment:
 
         # create a list for the bullet
         self.bullet_list = []
-        self.number_of_bullet = 0
+        self.name_of_bullet = 0
+        self.number_of_bullet = 10
 
         # Set up player
         self.position_environment = PositionEnvironment()
@@ -66,7 +67,7 @@ class ManagementEnvironment:
     def shoot_bullet(self):
         self.create_bullet()
 
-    def destroy_enemy(self):
+    def destroy_enemy_and_bullet(self):
         # take the list with the name of enemy we need to destroy
         list_to_destroy = self.position_environment.get_list_of_enemy_to_destroy()
         # take all the name in enemy list
@@ -109,7 +110,7 @@ class ManagementEnvironment:
                 enemy_item.draw()
 
         # check if we need to destroy an enemy
-        self.destroy_enemy()
+        self.destroy_enemy_and_bullet()
 
         # player
         self.player.draw()
@@ -118,13 +119,17 @@ class ManagementEnvironment:
         self.root.blit(fps_text, [(self.ROOT_WIDTH - 70), 20])
 
     def create_bullet(self):
-        self.number_of_bullet += 1
-        # search position player
-        position_x, position_y = self.player.get_position()
-        # get direction of the players
-        direction = self.player.get_direction()
-        # create bullet
-        self.bullet_list.append(
-            Bullet(self.root, "bullet", ("bullet" + str(self.number_of_bullet)), position_x, position_y,
-                   20, 20, self.HUMAN_SPEED, self.position_environment, direction))
-        print("create bullet")
+        self.name_of_bullet += 1
+        self.number_of_bullet -= 1
+        if self.number_of_bullet >= 1:
+            # search position player
+            position_x, position_y = self.player.get_position()
+            # get direction of the players
+            direction = self.player.get_direction()
+            # create bullet
+            self.bullet_list.append(
+                Bullet(self.root, "bullet", ("bullet" + str(self.name_of_bullet)), position_x, position_y,
+                       20, 20, self.HUMAN_SPEED, self.position_environment, direction))
+            print("create bullet")
+        else:
+            print("No ammo")

@@ -7,7 +7,7 @@ class PositionEnvironment:
         self.bullet_need_to_destroy = []
         self.human_or_bullet_name = None
         # to check if he died
-        self.player_pv = 2
+        self.player_pv = 10
         self.player_alive = True
 
     def manage_player_pv(self):

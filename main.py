@@ -10,6 +10,8 @@ from management_canvas import ManagementCanvas
     dessin de carte avec des murs et des entrées pour les enemy
     bouger les enemy sur le menu
     
+    Timer dans management canvas
+    
 """
 
 pygame.init()
@@ -18,6 +20,7 @@ pygame.init()
 ROOT_WIDTH = 900
 ROOT_HEIGHT = 600
 
+# timer_create_enemy = 1000
 
 # create root and the background root
 root = pygame.display.set_mode((ROOT_WIDTH, ROOT_HEIGHT))
@@ -27,7 +30,7 @@ pygame.display.set_caption("Game")
 clock = pygame.time.Clock()
 
 # call every in milliseconds
-pygame.time.set_timer(pygame.USEREVENT, 1000)
+# pygame.time.set_timer(pygame.USEREVENT, timer_create_enemy)
 
 launched = True
 management_canvas = ManagementCanvas(root, clock, launched, ROOT_WIDTH, ROOT_HEIGHT)
