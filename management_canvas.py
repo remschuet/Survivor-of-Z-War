@@ -10,6 +10,8 @@ class ManagementCanvas:
         self.HUMAN_HEIGHT = 80
         self.HUMAN_SPEED = 2
 
+        self.management_environment = None
+
         self.root_gameplay = False
         self.root_menu = True
 
@@ -23,7 +25,9 @@ class ManagementCanvas:
         self.root_background_image_menu = pygame.image.load("background_menu.png")
         self.root_background_image_menu = pygame.transform.scale(self.root_background_image_menu, (self.ROOT_WIDTH, self.ROOT_HEIGHT))
 
-        self.management_environment = ManagementEnvironment(root, self.HUMAN_WIDTH, self.HUMAN_HEIGHT,
+    def init_the_management_gameplay_environment(self):
+        # create all the enemy, player, bullet
+        self.management_environment = ManagementEnvironment(self.root, self.HUMAN_WIDTH, self.HUMAN_HEIGHT,
                                                             self.HUMAN_SPEED, self.ROOT_WIDTH, self.ROOT_HEIGHT)
 
     def call_every_frame(self):
@@ -51,6 +55,7 @@ class ManagementCanvas:
                     print("start")
                     self.root_gameplay = True
                     self.root_menu = False
+                    self.init_the_management_gameplay_environment()
 
     def check_event_key_in_gameplay(self):
         for event in pygame.event.get():
