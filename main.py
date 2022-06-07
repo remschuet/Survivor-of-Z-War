@@ -12,6 +12,12 @@ from management_canvas import ManagementCanvas
     
     Timer dans management canvas
     
+    bullet variable
+    bullet fonction to reset bullet variable
+    
+    need to create image
+    need to create a collision with box of bullet
+    
 """
 
 pygame.init()

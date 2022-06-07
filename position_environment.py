@@ -5,10 +5,15 @@ class PositionEnvironment:
         # create a list who tell management environment to destroy enemy
         self.enemy_need_to_destroy = []
         self.bullet_need_to_destroy = []
+        # add bullet in the inventory of the player
+        self.new_ammo = None
         self.human_or_bullet_name = None
         # to check if he died
-        self.player_pv = 10
+        self.player_pv = 2
         self.player_alive = True
+
+    def reset_ammo_variable(self):
+        self.new_ammo = None
 
     def manage_player_pv(self):
         if self.player_pv > 0:

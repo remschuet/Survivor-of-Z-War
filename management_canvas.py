@@ -95,7 +95,6 @@ class ManagementCanvas:
 
         self.management_environment.create_enemy_every_2_sec()
 
-
     def management_mouvement(self):
         # mouvement enemy
         self.management_environment.enemy_mouvement()

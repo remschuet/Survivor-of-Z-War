@@ -26,7 +26,7 @@ class ManagementEnvironment:
         # create a list for the bullet
         self.bullet_list = []
         self.name_of_bullet = 0
-        self.number_of_bullet = 10
+        self.number_of_ammo = 50
 
         # Set up player
         self.position_environment = PositionEnvironment()
@@ -120,8 +120,8 @@ class ManagementEnvironment:
 
     def create_bullet(self):
         self.name_of_bullet += 1
-        self.number_of_bullet -= 1
-        if self.number_of_bullet >= 1:
+        self.number_of_ammo -= 1
+        if self.number_of_ammo >= 1:
             # search position player
             position_x, position_y = self.player.get_position()
             # get direction of the players
