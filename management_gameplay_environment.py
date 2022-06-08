@@ -5,6 +5,7 @@ from player import Player
 from enemy import Enemy
 from position_environment import PositionEnvironment
 from bullet import Bullet
+from box_ammo import BoxAmmo
 
 
 class ManagementEnvironment:
@@ -17,7 +18,8 @@ class ManagementEnvironment:
         self.ROOT_HEIGHT = ROOT_HEIGHT
 
         # create writing style
-        self.arial_font = pygame.font.SysFont("arial", 20)
+        self.arial_font = pygame.font.SysFont("arial", 25)
+        self.arial_font_bold = pygame.font.SysFont("arial", 25, True)
 
         # create a list for the enemy
         self.enemy_list = []
@@ -26,12 +28,16 @@ class ManagementEnvironment:
         # create a list for the bullet
         self.bullet_list = []
         self.name_of_bullet = 0
-        self.number_of_ammo = 50
+        self.number_of_ammo = 20
 
         # Set up player
         self.position_environment = PositionEnvironment()
         self.player = Player(root, "player", "player", 400, 250,
                              self.HUMAN_WIDTH, self.HUMAN_HEIGHT, self.HUMAN_SPEED, self.position_environment)
+
+        # set up first ammo_box
+        self.box_ammo = BoxAmmo(root, "ammo", "box_ammo", 500, 300,
+                                self.HUMAN_WIDTH, self.HUMAN_HEIGHT, self.HUMAN_SPEED, self.position_environment)
 
     def random_position_of_enemy(self):
         list = [(0, 300), (450, 0), (900, 300), (450, 600)]
@@ -99,7 +105,7 @@ class ManagementEnvironment:
             if isinstance(bullet_item, Bullet):
                 bullet_item.movement()
 
-    def draw_human_and_fps(self, clock):
+    def draw_object_and_fps(self, clock):
         # bullet
         for bullet_item in self.bullet_list:
             if isinstance(bullet_item, Bullet):
@@ -112,16 +118,24 @@ class ManagementEnvironment:
         # check if we need to destroy an enemy
         self.destroy_enemy_and_bullet()
 
+        # draw ammo
+        self.box_ammo.draw()
+
         # player
         self.player.draw()
         # display the fsp in the screen
         fps_text = self.arial_font.render(f"{int(clock.get_fps())} fps", True, (0, 0, 0))
         self.root.blit(fps_text, [(self.ROOT_WIDTH - 70), 20])
 
+    def draw_ammo(self):
+        # draw ammo left in the screen
+        ammo_left = self.arial_font_bold.render(f"{self.number_of_ammo} ammo", True, (255, 0, 0), (182, 182, 182))
+        self.root.blit(ammo_left, [20, 20])
+
     def create_bullet(self):
         self.name_of_bullet += 1
-        self.number_of_ammo -= 1
         if self.number_of_ammo >= 1:
+            self.number_of_ammo -= 1
             # search position player
             position_x, position_y = self.player.get_position()
             # get direction of the players
@@ -133,3 +147,6 @@ class ManagementEnvironment:
             print("create bullet")
         else:
             print("No ammo")
+
+    def check_ammo_collision_player(self):
+        self.box_ammo.check_if_player_collision()

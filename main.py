@@ -11,6 +11,7 @@ from management_canvas import ManagementCanvas
     bouger les enemy sur le menu
     
     Timer dans management canvas
+    enemy mouvement don't need if when check collision
     
     bullet variable
     bullet fonction to reset bullet variable

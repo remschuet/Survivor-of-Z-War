@@ -40,12 +40,14 @@ class ManagementCanvas:
         if self.root_gameplay:
             self.check_event_key_in_gameplay()
             self.management_mouvement()
+            # check if player collision with box ammo
+            self.management_environment.check_ammo_collision_player()
             # check if player died
             self.management_player_alive_or_not()
-            self.draw_background_and_fps()
+            self.draw_background_informations()
         elif self.root_menu:
             self.check_event_key_in_menu()
-            self.draw_background_and_fps()
+            self.draw_background_informations()
 
     def check_event_key_in_menu(self):
         for event in pygame.event.get():
@@ -106,12 +108,14 @@ class ManagementCanvas:
             self.root_gameplay = False
             self.root_menu = True
 
-    def draw_background_and_fps(self):
+    def draw_background_informations(self):
         if self.root_gameplay:
-            # display the background image to the root
+            # draw background
             self.root.blit(self.root_background_image_gameplay, [0, 0])
+            # draw everything
+            self.management_environment.draw_object_and_fps(self.clock)
+            # draw ammo left
+            self.management_environment.draw_ammo()
 
-            # draw enemy
-            self.management_environment.draw_human_and_fps(self.clock)
         elif self.root_menu:
             self.root.blit(self.root_background_image_menu, [0, 0])

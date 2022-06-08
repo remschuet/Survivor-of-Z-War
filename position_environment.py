@@ -44,15 +44,17 @@ class PositionEnvironment:
     def destroy_enemy_in_dict(self, name):
         self.human_bullet_position_dic.pop(name)
 
-    def check_if_collision(self, name_id, position_x, position_y, width, height):
+    def check_if_enemy_collision(self, name_id, position_x, position_y, width, height):
         for self.human_or_bullet_name, (x, y, w, h) in self.human_bullet_position_dic.items():
             # to can take all the enemy
             all_number_to_100 = str(list(range(1, 100)))
-            if name_id != self.human_or_bullet_name and self.human_or_bullet_name != "enemy"+all_number_to_100:
+            if name_id != self.human_or_bullet_name and self.human_or_bullet_name != "enemy"+all_number_to_100 \
+                    and self.human_or_bullet_name != "box_ammo":
                 if position_x + width >= x and \
                         position_x <= x + w and \
                         position_y + height >= y and \
                         position_y <= y + h:
+                        # retrun to don't have problème avec le bas
                     # Return name of the object in collision not the player
                     self.enemy_need_to_destroy.clear()
                     self.bullet_need_to_destroy.clear()
@@ -64,3 +66,13 @@ class PositionEnvironment:
                         self.manage_player_pv()
                     return self.human_or_bullet_name
         return False
+
+    def check_if_box_ammo_collision(self, name_id, position_x, position_y, width, height):
+        for self.human_or_bullet_name, (x, y, w, h) in self.human_bullet_position_dic.items():
+            all_number_to_100 = str(list(range(1, 100)))
+            if name_id != self.human_or_bullet_name and self.human_or_bullet_name != "enemy"+all_number_to_100:
+                if position_x + width >= x and \
+                        position_x <= x + w and \
+                        position_y + height >= y and \
+                        position_y <= y + h:
+                    print("player collision with ammo")

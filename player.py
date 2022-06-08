@@ -9,13 +9,13 @@ class Player(Object):
 
         # for position in dict
         self.position_environment = position_environment
-        self.position_environment.set_new_position(self.name_id, self.position_x, self.position_y, self.width, self.height)
+        # inform position_player the x, y
+        self.set_new_position()
 
         # for the bullet creation
         self.direction = None
 
-        # inform position_player the x, y
-        self.set_new_position()
+
 
     def move_left(self):
         self.position_x -= self.speed
