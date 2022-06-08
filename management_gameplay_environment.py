@@ -33,11 +33,11 @@ class ManagementEnvironment:
 
         # to manage ammo
         self.box_ammo_list = []
-        self.number_of_ammo = 20
+        self.number_of_ammo = 15
 
         # number of box ammo
         self.number_of_box_ammo = 0
-        self.number_chance_box_ammo = 2
+        self.number_chance_box_ammo = 6
 
         # set up sound
         self.sound = Sounds()
@@ -47,10 +47,6 @@ class ManagementEnvironment:
         # set up player
         self.player = Player(self.root, "player", "player", 400, 250,
                              self.HUMAN_WIDTH, self.HUMAN_HEIGHT, self.HUMAN_SPEED, self.position_environment)
-
-        # # set up first ammo_box
-        # self.box_ammo_list.append(BoxAmmo(self.root, "ammo", "box_ammo", 250, 200, self.HUMAN_WIDTH, self.HUMAN_HEIGHT,
-        #                                   self.HUMAN_SPEED, self.position_environment))
 
     def random_position_of_enemy(self):
         list = [(0, 300), (450, 0), (900, 300), (450, 600)]
@@ -68,6 +64,9 @@ class ManagementEnvironment:
 
     def call_every_2_secondes(self):
         self.create_enemy_every_2_sec()
+        self.create_box_ammo()
+
+    def create_box_ammo(self):
         if not self.box_ammo_list:
             create_box_ammo = random.randint(1, self.number_chance_box_ammo)
             if create_box_ammo == 1:

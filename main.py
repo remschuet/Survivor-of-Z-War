@@ -14,6 +14,7 @@ from management_canvas import ManagementCanvas
     player pv in the player and not in the position environment
     
     enemy ne meurt pas avec le touché d une boite
+    random lieu de l apparition de la boite
 """
 
 pygame.init()
@@ -31,8 +32,6 @@ pygame.display.set_caption("Game")
 # create the clock (timer)
 clock = pygame.time.Clock()
 
-# call every in milliseconds
-# pygame.time.set_timer(pygame.USEREVENT, timer_create_enemy)
 
 launched = True
 management_canvas = ManagementCanvas(root, clock, launched, ROOT_WIDTH, ROOT_HEIGHT)

@@ -14,6 +14,8 @@ class PositionEnvironment:
         self.player_pv = 2
         # bool to know if alive
         self.player_alive = True
+        # list of every possibility of box ammo
+        self.possibility_box_ammo = ["box_ammo1", "2"]
 
     def get_box_ammo_to_destroy(self):
         return self.box_ammo_image_need_to_destroy
@@ -51,11 +53,15 @@ class PositionEnvironment:
             # to can take all the enemy
             all_number_to_100 = str(list(range(1, 100)))
             if name_id != self.opponent_object and self.opponent_object != "enemy"+all_number_to_100 \
-                    and self.opponent_object != "box_ammo1":
+                    and self.opponent_object != "box_ammo1" and self.opponent_object != "box_ammo2" \
+                    and self.opponent_object != "box_ammo3" and self.opponent_object != "box_ammo4"\
+                    and self.opponent_object != "box_ammo5" and self.opponent_object != "box_ammo6"\
+                    and self.opponent_object != "box_ammo7" and self.opponent_object != "box_ammo8":
                 if position_x + width >= x and \
                         position_x <= x + w and \
                         position_y + height >= y and \
                         position_y <= y + h:
+
                     # clear some list
                     self.enemy_need_to_destroy.clear()
                     self.bullet_need_to_destroy.clear()
