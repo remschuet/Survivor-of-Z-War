@@ -35,31 +35,55 @@ class ManagementEnvironment:
         self.box_ammo_list = []
         self.number_of_ammo = 20
 
+        # number of box ammo
+        self.number_of_box_ammo = 0
+        self.number_chance_box_ammo = 2
+
         # set up sound
         self.sound = Sounds()
 
         # set up environment
         self.position_environment = PositionEnvironment()
         # set up player
-        self.player = Player(root, "player", "player", 400, 250,
+        self.player = Player(self.root, "player", "player", 400, 250,
                              self.HUMAN_WIDTH, self.HUMAN_HEIGHT, self.HUMAN_SPEED, self.position_environment)
 
-        # set up first ammo_box
-        self.box_ammo_list.append(BoxAmmo(root, "ammo", "box_ammo", 500, 300, self.HUMAN_WIDTH, self.HUMAN_HEIGHT,
-                                          self.HUMAN_SPEED, self.position_environment))
+        # # set up first ammo_box
+        # self.box_ammo_list.append(BoxAmmo(self.root, "ammo", "box_ammo", 250, 200, self.HUMAN_WIDTH, self.HUMAN_HEIGHT,
+        #                                   self.HUMAN_SPEED, self.position_environment))
 
     def random_position_of_enemy(self):
         list = [(0, 300), (450, 0), (900, 300), (450, 600)]
         x, y = random.choice(list)
         return x, y
 
+    def enemy_select_type(self):
+        choice = random.randint(1, 3)
+        if choice == 1:
+            return "zombie"
+        elif choice == 2:
+            return "squeletton"
+        elif choice == 3:
+            return "momie"
+
+    def call_every_2_secondes(self):
+        self.create_enemy_every_2_sec()
+        if not self.box_ammo_list:
+            create_box_ammo = random.randint(1, self.number_chance_box_ammo)
+            if create_box_ammo == 1:
+                self.number_of_box_ammo += 1
+                self.box_ammo_list.append(
+                    BoxAmmo(self.root, "ammo", "box_ammo" + str(self.number_of_box_ammo), 20, 200, self.HUMAN_WIDTH, self.HUMAN_HEIGHT,
+                            self.HUMAN_SPEED, self.position_environment))
+
     def create_enemy_every_2_sec(self):
-        self.number_of_enemy += 1
-        # random position
-        position_x, position_y = self.random_position_of_enemy()
         # create enemy
         if self.number_of_enemy <= 50:
-            self.enemy_list.append(Enemy(self.root, "enemy", ("enemy" + str(self.number_of_enemy)),
+            self.number_of_enemy += 1
+            # random position
+            position_x, position_y = self.random_position_of_enemy()
+            choice = self.enemy_select_type()
+            self.enemy_list.append(Enemy(self.root, "enemy_"+str(choice), ("enemy" + str(self.number_of_enemy)),
                                          position_x, position_y, self.HUMAN_WIDTH, self.HUMAN_HEIGHT,
                                          self.HUMAN_SPEED, self.position_environment))
 
@@ -113,7 +137,7 @@ class ManagementEnvironment:
                 for item_name_to_destroy in list_box_ammo:
                     if box_ammo_item.name_id == item_name_to_destroy:
                         self.number_of_ammo += 10
-                        self.box_ammo_list.remove(box_ammo_item)
+                        self.box_ammo_list.clear()
                         self.position_environment.destroy_object_in_dict(box_ammo_item.name_id)
                         self.sound.play_box_ammo_sound()
 

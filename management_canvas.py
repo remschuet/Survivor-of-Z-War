@@ -75,7 +75,8 @@ class ManagementCanvas:
                 self.launched = False
             # create enemy with clock timer
             elif event.type == pygame.USEREVENT:
-                self.management_environment.create_enemy_every_2_sec()
+                self.management_environment.call_every_2_secondes()
+                # self.management_environment.create_enemy_every_2_sec()
             # to can shoot
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_3:

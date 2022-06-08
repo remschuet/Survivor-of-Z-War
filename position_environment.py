@@ -51,7 +51,7 @@ class PositionEnvironment:
             # to can take all the enemy
             all_number_to_100 = str(list(range(1, 100)))
             if name_id != self.opponent_object and self.opponent_object != "enemy"+all_number_to_100 \
-                    and self.opponent_object != "box_ammo":
+                    and self.opponent_object != "box_ammo1":
                 if position_x + width >= x and \
                         position_x <= x + w and \
                         position_y + height >= y and \

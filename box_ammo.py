@@ -9,6 +9,8 @@ class BoxAmmo(Object):
 
         self.position_environment = position_environment
 
+        print(self.name_id)
+
         self.set_new_position()
 
     def set_new_position(self):

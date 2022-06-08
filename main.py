@@ -12,6 +12,8 @@ from management_canvas import ManagementCanvas
     image lorsque l on bouge
     particules?
     player pv in the player and not in the position environment
+    
+    enemy ne meurt pas avec le touché d une boite
 """
 
 pygame.init()
