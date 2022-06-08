@@ -28,6 +28,9 @@ class ManagementEnvironment:
         # create a list for the bullet
         self.bullet_list = []
         self.name_of_bullet = 0
+
+        # to manage ammo
+        self.box_ammo_list = []
         self.number_of_ammo = 20
 
         # Set up player
@@ -36,8 +39,8 @@ class ManagementEnvironment:
                              self.HUMAN_WIDTH, self.HUMAN_HEIGHT, self.HUMAN_SPEED, self.position_environment)
 
         # set up first ammo_box
-        self.box_ammo = BoxAmmo(root, "ammo", "box_ammo", 500, 300,
-                                self.HUMAN_WIDTH, self.HUMAN_HEIGHT, self.HUMAN_SPEED, self.position_environment)
+        self.box_ammo_list.append(BoxAmmo(root, "ammo", "box_ammo", 500, 300, self.HUMAN_WIDTH, self.HUMAN_HEIGHT,
+                                          self.HUMAN_SPEED, self.position_environment))
 
     def random_position_of_enemy(self):
         list = [(0, 300), (450, 0), (900, 300), (450, 600)]
@@ -85,7 +88,7 @@ class ManagementEnvironment:
                         # remove item fro the enemy_list
                         self.enemy_list.remove(enemy_item)
                         # destroy the position in position environment dict
-                        self.position_environment.destroy_enemy_in_dict(enemy_item.name_id)
+                        self.position_environment.destroy_object_in_dict(enemy_item.name_id)
 
         list_bullet = self.position_environment.get_list_of_bullet_to_destroy()
         for bullet_item in self.bullet_list:
@@ -93,7 +96,16 @@ class ManagementEnvironment:
                 for item_name_to_destroy in list_bullet:
                     if bullet_item.name_id == item_name_to_destroy:
                         self.bullet_list.remove(bullet_item)
-                        self.position_environment.destroy_enemy_in_dict(bullet_item.name_id)
+                        self.position_environment.destroy_object_in_dict(bullet_item.name_id)
+
+        list_box_ammo = self.position_environment.get_box_ammo_to_destroy()
+        for box_ammo_item in self.box_ammo_list:
+            if isinstance(box_ammo_item, BoxAmmo):
+                for item_name_to_destroy in list_box_ammo:
+                    if box_ammo_item.name_id == item_name_to_destroy:
+                        self.number_of_ammo += 10
+                        self.box_ammo_list.remove(box_ammo_item)
+                        self.position_environment.destroy_object_in_dict(box_ammo_item.name_id)
 
     def enemy_mouvement(self):
         for enemy_item in self.enemy_list:
@@ -115,11 +127,15 @@ class ManagementEnvironment:
             if isinstance(enemy_item, Enemy):
                 enemy_item.draw()
 
+        for box_ammo_item in self.box_ammo_list:
+            if isinstance(box_ammo_item, BoxAmmo):
+                box_ammo_item.draw()
+
         # check if we need to destroy an enemy
         self.destroy_enemy_and_bullet()
 
-        # draw ammo
-        self.box_ammo.draw()
+        # # draw ammo
+        # self.box_ammo.draw()
 
         # player
         self.player.draw()
@@ -149,4 +165,6 @@ class ManagementEnvironment:
             print("No ammo")
 
     def check_ammo_collision_player(self):
-        self.box_ammo.check_if_player_collision()
+        for box_ammo_item in self.box_ammo_list:
+            if isinstance(box_ammo_item, BoxAmmo):
+                box_ammo_item.check_if_player_collision()

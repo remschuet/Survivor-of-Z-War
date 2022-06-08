@@ -87,14 +87,9 @@ class ManagementCanvas:
             self.management_environment.key_pressed(keys_pressed)
 
     def call_every_2_seconds(self):
+        # methode call every two seconde
         self.USEREVENT_timer += 1
         self.spawn_speed = False
-        # if timer is multiply of 5 update new timer
-        # if self.USEREVENT_timer % 5 == 0:
-        # self.timer_create_enemy -= 300
-        # re create timer with an other variable
-        # pygame.time.set_timer(pygame.USEREVENT, self.timer_create_enemy)
-
         self.management_environment.create_enemy_every_2_sec()
 
     def management_mouvement(self):
