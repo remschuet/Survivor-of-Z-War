@@ -8,6 +8,9 @@ from management_canvas import ManagementCanvas
     bouger les enemy sur le menu
     apparaitre box ammo aléatoirement
     mettre methode dans plusieurs fichiers différents
+    image enemy aléatoire
+    image lorsque l on bouge
+    particules?
 """
 
 pygame.init()
