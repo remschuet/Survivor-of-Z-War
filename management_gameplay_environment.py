@@ -7,6 +7,8 @@ from position_environment import PositionEnvironment
 from bullet import Bullet
 from box_ammo import BoxAmmo
 
+from sounds import Sounds
+
 
 class ManagementEnvironment:
     def __init__(self, root, HUMAN_WIDTH, HUMAN_HEIGHT, HUMAN_SPEED, ROOT_WIDTH, ROOT_HEIGHT):
@@ -33,8 +35,12 @@ class ManagementEnvironment:
         self.box_ammo_list = []
         self.number_of_ammo = 20
 
-        # Set up player
+        # set up sound
+        self.sound = Sounds()
+
+        # set up environment
         self.position_environment = PositionEnvironment()
+        # set up player
         self.player = Player(root, "player", "player", 400, 250,
                              self.HUMAN_WIDTH, self.HUMAN_HEIGHT, self.HUMAN_SPEED, self.position_environment)
 
@@ -52,7 +58,7 @@ class ManagementEnvironment:
         # random position
         position_x, position_y = self.random_position_of_enemy()
         # create enemy
-        if self.number_of_enemy <= 20:
+        if self.number_of_enemy <= 50:
             self.enemy_list.append(Enemy(self.root, "enemy", ("enemy" + str(self.number_of_enemy)),
                                          position_x, position_y, self.HUMAN_WIDTH, self.HUMAN_HEIGHT,
                                          self.HUMAN_SPEED, self.position_environment))
@@ -69,6 +75,7 @@ class ManagementEnvironment:
 
     def check_if_end_game(self):
         if not self.position_environment.get_bool_player_alive_or_not():
+            self.sound.play_game_over_sound()
             return False
         else:
             return True
@@ -90,6 +97,7 @@ class ManagementEnvironment:
                         self.enemy_list.remove(enemy_item)
                         # destroy the position in position environment dict
                         self.position_environment.destroy_object_in_dict(enemy_item.name_id)
+                        self.sound.play_enemy_died_sound()
         # bullet
         list_bullet = self.position_environment.get_list_of_bullet_to_destroy()
         for bullet_item in self.bullet_list:
@@ -107,6 +115,7 @@ class ManagementEnvironment:
                         self.number_of_ammo += 10
                         self.box_ammo_list.remove(box_ammo_item)
                         self.position_environment.destroy_object_in_dict(box_ammo_item.name_id)
+                        self.sound.play_box_ammo_sound()
 
     def enemy_mouvement(self):
         for enemy_item in self.enemy_list:
@@ -144,8 +153,8 @@ class ManagementEnvironment:
         self.root.blit(ammo_left, [20, 20])
 
     def create_bullet(self):
-        self.name_of_bullet += 1
         if self.number_of_ammo >= 1:
+            self.name_of_bullet += 1
             self.number_of_ammo -= 1
             # search position player
             position_x, position_y = self.player.get_position()
@@ -154,6 +163,10 @@ class ManagementEnvironment:
             # create bullet
             self.bullet_list.append(Bullet(self.root, "bullet", ("bullet" + str(self.name_of_bullet)), position_x,
                                            position_y, 20, 20, self.HUMAN_SPEED, self.position_environment, direction))
+            self.sound.play_bullet_shoot_sound()
+        else:
+            # sound tell empty gun
+            self.sound.play_bullet_empty_sound()
 
     def check_ammo_collision_player(self):
         for box_ammo_item in self.box_ammo_list:
