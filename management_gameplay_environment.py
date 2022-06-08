@@ -68,7 +68,7 @@ class ManagementEnvironment:
             self.player.move_down()
 
     def check_if_end_game(self):
-        if not self.position_environment.get_player_alive_or_not():
+        if not self.position_environment.get_bool_player_alive_or_not():
             return False
         else:
             return True
@@ -76,9 +76,10 @@ class ManagementEnvironment:
     def shoot_bullet(self):
         self.create_bullet()
 
-    def destroy_object_and_bullet(self):
+    def check_destroy_object(self):
         # take the list with the name of enemy we need to destroy
         list_to_destroy = self.position_environment.get_list_of_enemy_to_destroy()
+        # enemy
         # take all the name in enemy list
         for enemy_item in self.enemy_list:
             if isinstance(enemy_item, Enemy):
@@ -89,7 +90,7 @@ class ManagementEnvironment:
                         self.enemy_list.remove(enemy_item)
                         # destroy the position in position environment dict
                         self.position_environment.destroy_object_in_dict(enemy_item.name_id)
-
+        # bullet
         list_bullet = self.position_environment.get_list_of_bullet_to_destroy()
         for bullet_item in self.bullet_list:
             if isinstance(bullet_item, Bullet):
@@ -97,7 +98,7 @@ class ManagementEnvironment:
                     if bullet_item.name_id == item_name_to_destroy:
                         self.bullet_list.remove(bullet_item)
                         self.position_environment.destroy_object_in_dict(bullet_item.name_id)
-
+        # box ammo
         list_box_ammo = self.position_environment.get_box_ammo_to_destroy()
         for box_ammo_item in self.box_ammo_list:
             if isinstance(box_ammo_item, BoxAmmo):
@@ -117,33 +118,27 @@ class ManagementEnvironment:
             if isinstance(bullet_item, Bullet):
                 bullet_item.movement()
 
-    def draw_object_and_fps(self, clock):
-        # bullet
-        for bullet_item in self.bullet_list:
-            if isinstance(bullet_item, Bullet):
-                bullet_item.draw()
+    def draw_object(self):
+        # player
+        self.player.draw()
         # enemy
         for enemy_item in self.enemy_list:
             if isinstance(enemy_item, Enemy):
                 enemy_item.draw()
-
+        # bullet
+        for bullet_item in self.bullet_list:
+            if isinstance(bullet_item, Bullet):
+                bullet_item.draw()
+        # box ammo
         for box_ammo_item in self.box_ammo_list:
             if isinstance(box_ammo_item, BoxAmmo):
                 box_ammo_item.draw()
 
-        # check if we need to destroy an enemy
-        self.destroy_object_and_bullet()
-
-        # # draw ammo
-        # self.box_ammo.draw()
-
-        # player
-        self.player.draw()
+    def draw_informations(self, clock):
         # display the fsp in the screen
         fps_text = self.arial_font.render(f"{int(clock.get_fps())} fps", True, (0, 0, 0))
         self.root.blit(fps_text, [(self.ROOT_WIDTH - 70), 20])
 
-    def draw_ammo(self):
         # draw ammo left in the screen
         ammo_left = self.arial_font_bold.render(f"{self.number_of_ammo} ammo", True, (255, 0, 0), (182, 182, 182))
         self.root.blit(ammo_left, [20, 20])
@@ -157,12 +152,8 @@ class ManagementEnvironment:
             # get direction of the players
             direction = self.player.get_direction()
             # create bullet
-            self.bullet_list.append(
-                Bullet(self.root, "bullet", ("bullet" + str(self.name_of_bullet)), position_x, position_y,
-                       20, 20, self.HUMAN_SPEED, self.position_environment, direction))
-            print("create bullet")
-        else:
-            print("No ammo")
+            self.bullet_list.append(Bullet(self.root, "bullet", ("bullet" + str(self.name_of_bullet)), position_x,
+                                           position_y, 20, 20, self.HUMAN_SPEED, self.position_environment, direction))
 
     def check_ammo_collision_player(self):
         for box_ammo_item in self.box_ammo_list:

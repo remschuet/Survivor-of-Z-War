@@ -15,7 +15,7 @@ class Enemy(Object):
 
         # set up position in dict
         self.position_environment = position_environment
-        self.position_environment.set_new_position(self.name_id, self.position_x, self.position_y, self.width, self.height)
+        self.position_environment.set_new_position_in_dict(self.name_id, self.position_x, self.position_y, self.width, self.height)
 
     def move_left(self):
         self.position_x -= self.speed//2
@@ -60,4 +60,4 @@ class Enemy(Object):
             self.set_new_positon()
 
     def set_new_positon(self):
-        self.position_environment.set_new_position(self.name_id, self.position_x, self.position_y, self.width, self.height)
+        self.position_environment.set_new_position_in_dict(self.name_id, self.position_x, self.position_y, self.width, self.height)

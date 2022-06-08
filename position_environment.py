@@ -1,30 +1,24 @@
 class PositionEnvironment:
     def __init__(self):
-        # create the dictionary for the name: x, y
-        self.human_bullet_position_dic = {}
-        # create a list who tell management environment to destroy enemy
+        # dictionary for object name: x, y, w, h
+        self.object_position_dict = {}
+        # list to know enemy need to destroy
         self.enemy_need_to_destroy = []
+        # list to know bullet need to destroy
         self.bullet_need_to_destroy = []
-        # add bullet in the inventory of the player
-        self.ammo_need_to_destroy = []
-        self.human_or_bullet_name = None
-        # to check if he died
+        # list to know ammo need to destroy
+        self.box_ammo_image_need_to_destroy = []
+        # for the opponent collision
+        self.opponent_object = None
+        # player pv
         self.player_pv = 2
+        # bool to know if alive
         self.player_alive = True
 
     def get_box_ammo_to_destroy(self):
-        return self.ammo_need_to_destroy
+        return self.box_ammo_image_need_to_destroy
 
-    def create_ammo_variable(self):
-        self.ammo_need_to_destroy = True
-
-    def manage_player_pv(self):
-        if self.player_pv > 0:
-            self.player_pv -= 1
-        elif self.player_pv <= 0:
-            self.player_alive = False
-
-    def get_player_alive_or_not(self):
+    def get_bool_player_alive_or_not(self):
         return self.player_alive
 
     def get_list_of_bullet_to_destroy(self):
@@ -33,50 +27,54 @@ class PositionEnvironment:
     def get_list_of_enemy_to_destroy(self):
         return self.enemy_need_to_destroy
 
-    def set_new_position(self, name, position_x, position_y, width, height):
-        # set up position for every human
-        self.human_bullet_position_dic[name] = (position_x, position_y, width, height)
-
-    def print_position_dict(self):
-        print(self.human_bullet_position_dic)
-
     def get_position_player(self):
-        if "player" in self.human_bullet_position_dic:
-            return self.human_bullet_position_dic["player"]
+        return self.object_position_dict["player"]
+
+    def set_ammo_variable_true(self):
+        self.box_ammo_image_need_to_destroy = True
+
+    def manage_player_pv(self):
+        if self.player_pv > 0:
+            self.player_pv -= 1
+        elif self.player_pv <= 0:
+            self.player_alive = False
+
+    def set_new_position_in_dict(self, name, position_x, position_y, width, height):
+        # set up position for every object
+        self.object_position_dict[name] = (position_x, position_y, width, height)
 
     def destroy_object_in_dict(self, name):
-        self.human_bullet_position_dic.pop(name)
+        self.object_position_dict.pop(name)
 
     def check_if_enemy_collision(self, name_id, position_x, position_y, width, height):
-        for self.human_or_bullet_name, (x, y, w, h) in self.human_bullet_position_dic.items():
+        for self.opponent_object, (x, y, w, h) in self.object_position_dict.items():
             # to can take all the enemy
             all_number_to_100 = str(list(range(1, 100)))
-            if name_id != self.human_or_bullet_name and self.human_or_bullet_name != "enemy"+all_number_to_100 \
-                    and self.human_or_bullet_name != "box_ammo":
+            if name_id != self.opponent_object and self.opponent_object != "enemy"+all_number_to_100 \
+                    and self.opponent_object != "box_ammo":
                 if position_x + width >= x and \
                         position_x <= x + w and \
                         position_y + height >= y and \
                         position_y <= y + h:
-                        # retrun to don't have problème avec le bas
-                    # Return name of the object in collision not the player
+                    # clear some list
                     self.enemy_need_to_destroy.clear()
                     self.bullet_need_to_destroy.clear()
-                    # put the enemy in a list
+                    # add enemy and bullet in list
                     self.enemy_need_to_destroy.append(name_id)
-                    self.bullet_need_to_destroy.append(self.human_or_bullet_name)
+                    self.bullet_need_to_destroy.append(self.opponent_object)
                     # check collision with player
-                    if self.human_or_bullet_name == "player":
+                    if self.opponent_object == "player":
+                        # decrease player pv
                         self.manage_player_pv()
-                    return self.human_or_bullet_name
+                    return self.opponent_object
         return False
 
     def check_if_box_ammo_collision(self, name_id, position_x, position_y, width, height):
-        for self.human_or_bullet_name, (x, y, w, h) in self.human_bullet_position_dic.items():
-            all_number_to_100 = str(list(range(1, 100)))
-            if name_id != self.human_or_bullet_name and self.human_or_bullet_name == "player":
+        for self.opponent_object, (x, y, w, h) in self.object_position_dict.items():
+            if name_id != self.opponent_object and self.opponent_object == "player":
                 if position_x + width >= x and \
                         position_x <= x + w and \
                         position_y + height >= y and \
                         position_y <= y + h:
                     print("player collision with ammo")
-                    self.ammo_need_to_destroy.append(name_id)
+                    self.box_ammo_image_need_to_destroy.append(name_id)

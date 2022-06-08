@@ -11,10 +11,6 @@ class Bullet(Object):
 
         self.speed = 3
         self.direction = direction
-        self.printname()
-
-    def printname(self):
-        print(self.name_id)
 
     def movement(self):
         # move from the player position x, y
@@ -34,5 +30,5 @@ class Bullet(Object):
         self.set_new_positon()
 
     def set_new_positon(self):
-        self.position_environment.set_new_position(self.name_id, self.position_x, self.position_y,
-                                                   self.width, self.height)
+        self.position_environment.set_new_position_in_dict(self.name_id, self.position_x, self.position_y,
+                                                           self.width, self.height)

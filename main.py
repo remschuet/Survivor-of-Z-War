@@ -11,6 +11,7 @@ from management_canvas import ManagementCanvas
     image enemy aléatoire
     image lorsque l on bouge
     particules?
+    player pv in the player and not in the position environment
 """
 
 pygame.init()

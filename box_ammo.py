@@ -12,7 +12,7 @@ class BoxAmmo(Object):
         self.set_new_position()
 
     def set_new_position(self):
-        self.position_environment.set_new_position(self.name_id, self.position_x, self.position_y, self.width, self.height)
+        self.position_environment.set_new_position_in_dict(self.name_id, self.position_x, self.position_y, self.width, self.height)
 
     def check_if_player_collision(self):
         self.position_environment.check_if_box_ammo_collision(self.name_id, self.position_x, self.position_y, self.width,

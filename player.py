@@ -43,7 +43,7 @@ class Player(Object):
 
     def set_new_position(self):
         # self.position_player.set_new_position(self.position_x, self.position_y)
-        self.position_environment.set_new_position(self.name_id, self.position_x, self.position_y, self.width, self.height)
+        self.position_environment.set_new_position_in_dict(self.name_id, self.position_x, self.position_y, self.width, self.height)
         # print the dict
         # self.position_environment.print_position_dict()
 
