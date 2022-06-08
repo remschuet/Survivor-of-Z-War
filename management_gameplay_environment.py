@@ -76,7 +76,7 @@ class ManagementEnvironment:
     def shoot_bullet(self):
         self.create_bullet()
 
-    def destroy_enemy_and_bullet(self):
+    def destroy_object_and_bullet(self):
         # take the list with the name of enemy we need to destroy
         list_to_destroy = self.position_environment.get_list_of_enemy_to_destroy()
         # take all the name in enemy list
@@ -132,7 +132,7 @@ class ManagementEnvironment:
                 box_ammo_item.draw()
 
         # check if we need to destroy an enemy
-        self.destroy_enemy_and_bullet()
+        self.destroy_object_and_bullet()
 
         # # draw ammo
         # self.box_ammo.draw()

@@ -3,22 +3,11 @@ from management_canvas import ManagementCanvas
 
 """
     REFACTORING
-    timer pour les balles, avec un temps en seconde
-    mettre un maximum de balle dans le fusil
     mettre un system de point de vie visuel
-    Mettre le fusil ready à chaque seconde
     dessin de carte avec des murs et des entrées pour les enemy
     bouger les enemy sur le menu
-    
-    Timer dans management canvas
-    enemy mouvement don't need if when check collision
-    
-    bullet variable
-    bullet fonction to reset bullet variable
-    
-    need to create image
-    need to create a collision with box of bullet
-    
+    apparaitre box ammo aléatoirement
+    mettre methode dans plusieurs fichiers différents
 """
 
 pygame.init()
