@@ -44,7 +44,10 @@ class ManagementEnvironment:
         self.score_total = score_total
 
         # player pv
-        player_pv = 3
+        self.player_pv = 3
+        # for the sound final
+        self.player_win = False
+
         self.player_image_pv_3 = pygame.image.load("asset/image/player_pv_3.png")
         self.player_image_pv_2 = pygame.image.load("asset/image/player_pv_2.png")
         self.player_image_pv_1 = pygame.image.load("asset/image/player_pv_1.png")
@@ -53,7 +56,7 @@ class ManagementEnvironment:
         self.sound = Sounds()
 
         # set up environment
-        self.position_environment = PositionEnvironment(player_pv)
+        self.position_environment = PositionEnvironment(self.player_pv)
         # set up player
         self.player = Player(self.root, "player_" + self.player_color, "player", 400, 250,
                              self.OBJECT_WIDTH, self.OBJECT_HEIGHT, self.OBJECT_SPEED, self.position_environment)
@@ -107,14 +110,20 @@ class ManagementEnvironment:
         # create enemy
         if self.number_of_enemy <= 100:
             if self.number_of_enemy <= 10:
-                self.create_enemy()
+                self.call_create_enemy_several_time(1)
             elif self.number_of_enemy > 10:
-                self.create_enemy()
-                self.create_enemy()
+                self.call_create_enemy_several_time(2)
             elif self.number_of_enemy > 30:
-                self.create_enemy()
-                self.create_enemy()
-                self.create_enemy()
+                self.call_create_enemy_several_time(3)
+            elif self.number_of_enemy > 70:
+                self.call_create_enemy_several_time(4)
+        else:
+            self.player_win = True
+            self.sound.play_win_game()
+
+    def call_create_enemy_several_time(self, i: int):
+        for _ in range(i):
+            self.create_enemy()
 
     def create_enemy(self):
         self.number_of_enemy += 1
@@ -138,6 +147,8 @@ class ManagementEnvironment:
     def check_if_end_game(self):
         if not self.position_environment.get_bool_player_alive_or_not():
             self.sound.play_game_over_sound()
+            return False
+        elif self.player_win:
             return False
         else:
             return True

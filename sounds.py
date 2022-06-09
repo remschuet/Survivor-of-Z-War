@@ -14,6 +14,17 @@ class Sounds:
         self.sound_enemy_died_01 = pygame.mixer.Sound("asset/sounds/monster_died_1.wav")
         self.sound_enemy_died_03 = pygame.mixer.Sound("asset/sounds/monster_died_3.wav")
         self.sound_player_hit = pygame.mixer.Sound("asset/sounds/player_hit.wav")
+        self.sound_win_game = pygame.mixer.Sound("asset/sounds/win_game.wav")
+
+    def play_win_game(self):
+        # stop all sound
+        self.sound_game_over.stop()
+        self.sound_enemy_died_01.stop()
+        self.sound_enemy_died_03.stop()
+        # set volume
+        self.sound_win_game.set_volume(0.5)
+        # play final sound
+        self.sound_win_game.play()
 
     def play_bullet_shoot_sound(self):
         self.sound_bullet_shoot.play()
