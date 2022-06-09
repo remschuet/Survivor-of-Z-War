@@ -14,11 +14,11 @@ class Object:
 
         prefix = str.lower(self.name_image)
 
-        # create image for everyone
+        # create and resize image
         self.object_image = pygame.image.load("asset/image/"+prefix+"_idle.png")
         self.object_image = pygame.transform.scale(self.object_image, (self.width, self.height))
 
-        # draw the human in the root
+        # draw the object in the root
         self.draw()
 
     def draw(self):

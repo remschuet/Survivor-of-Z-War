@@ -120,7 +120,7 @@ class ManagementCanvas:
             # to can shoot
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_3:
-                    self.management_environment.shoot_bullet()
+                    self.management_environment.call_create_bullet()
 
         # player mouvement
         keys_pressed = pygame.key.get_pressed()
@@ -147,5 +147,5 @@ class ManagementCanvas:
             self.management_environment.draw_score()
         elif self.root_menu:
             self.root.blit(self.root_background_image_menu, [0, 0])
-            self.management_menu_environment.draw_zombie_menu()
+            self.management_menu_environment.draw_zombie_and_player_menu()
             self.management_menu_environment.draw_best_score()

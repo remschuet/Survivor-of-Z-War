@@ -2,15 +2,16 @@ import pygame
 
 
 class PlayerMenu:
-    def __init__(self, root, position_x, position_y, width, height):
+    def __init__(self, root, position_x: int, position_y: int, width: int, height: int):
         self.root = root
         self.position_x = position_x
         self.position_y = position_y
         self.width = width
         self.height = height
-        self.object_image = None
 
+        # player image
         self.player_color = "asset/image/player_yellow_idle.png"
+        self.object_image = None
         self.resize_image()
 
     def set_new_color(self, number: int):

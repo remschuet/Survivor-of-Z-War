@@ -2,18 +2,22 @@ import pygame
 
 
 class ZombieMenu:
-    def __init__(self, root, position_x, position_y, min_x, max_x, width, height):
+    def __init__(self, root, position_x: int, position_y: int, min_x: int, max_x: int, width: int, height: int):
+        self.root = root
         self.position_x = position_x
         self.position_y = position_y
         self.min_x = min_x
         self.max_x = max_x
-        self.speed = 1
         self.width = width
         self.height = height
-        self.root = root
 
+        # speed mouvement
+        self.speed = 1
+
+        # first direction to right
         self.direction = "right"
 
+        # image
         self.object_image = pygame.image.load("asset/image/enemy_zombie_idle.png")
         self.object_image = pygame.transform.scale(self.object_image, (self.width, self.height))
 

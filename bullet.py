@@ -9,23 +9,21 @@ class Bullet(Object):
 
         self.position_environment = position_environment
 
+        # set speed bullet
         self.speed = 3
+        # set direction bullet
         self.direction = direction
 
     def movement(self):
         # move from the player position x, y
         if self.direction == "left":
             self.position_x = self.position_x - 10
-
         if self.direction == "right":
             self.position_x = self.position_x + 10
-
         if self.direction == "up":
             self.position_y = self.position_y - 10
-
         if self.direction == "down":
             self.position_y = self.position_y + 10
-
         # set the new position
         self.set_new_positon()
 

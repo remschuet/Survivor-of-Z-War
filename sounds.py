@@ -36,16 +36,17 @@ class Sounds:
         self.sound_get_box_ammo.play()
 
     def play_game_over_sound(self):
-        # to don't have the sound of the enemy death
+        # stop all sound
         self.sound_enemy_died_01.stop()
         self.sound_enemy_died_03.stop()
-
+        # play sound game over
         self.sound_game_over.play()
 
     def play_player_hit_sound(self):
         self.sound_player_hit.play()
 
     def play_enemy_died_sound(self):
+        # random between 2 sound
         i = random.randint(1, 2)
         if i == 1:
             self.sound_enemy_died_01.play()

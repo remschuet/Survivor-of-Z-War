@@ -14,8 +14,6 @@ class PositionEnvironment:
         self.player_pv = player_pv
         # bool to know if alive
         self.player_alive = True
-        # list of every possibility of box ammo
-        self.possibility_box_ammo = ["box_ammo1", "2"]
 
     def get_player_pv(self):
         return self.player_pv
@@ -38,15 +36,14 @@ class PositionEnvironment:
     def set_ammo_variable_true(self):
         self.box_ammo_image_need_to_destroy = True
 
+    def set_new_position_in_dict(self, name, position_x, position_y, width, height):
+        self.object_position_dict[name] = (position_x, position_y, width, height)
+
     def manage_player_pv(self):
         if self.player_pv > 1:
             self.player_pv -= 1
         elif self.player_pv <= 1:
             self.player_alive = False
-
-    def set_new_position_in_dict(self, name, position_x, position_y, width, height):
-        # set up position for every object
-        self.object_position_dict[name] = (position_x, position_y, width, height)
 
     def destroy_object_in_dict(self, name):
         self.object_position_dict.pop(name)
@@ -75,7 +72,7 @@ class PositionEnvironment:
                     # add enemy and bullet in list
                     self.enemy_need_to_destroy.append(name_id)
                     self.bullet_need_to_destroy.append(self.opponent_object)
-                    # check collision with player
+                    # check if collision with player
                     if self.opponent_object == "player":
                         # decrease player pv
                         self.manage_player_pv()
@@ -89,4 +86,5 @@ class PositionEnvironment:
                         position_x <= x + w and \
                         position_y + height >= y and \
                         position_y <= y + h:
+                    # if collision, destroy box ammo
                     self.box_ammo_image_need_to_destroy.append(name_id)

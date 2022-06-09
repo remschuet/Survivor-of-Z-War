@@ -7,15 +7,20 @@ class Enemy(Object):
                  speed: int, position_environment: PositionEnvironment):
         super().__init__(root, name_image, name_id, position_x, position_y, height, width, speed)
 
-        # to can reach position of the player
+        self.position_environment = position_environment
+
+        # player position
         self.player_position_x = None
         self.player_position_y = None
-        self.width = width
-        self.height = height
 
-        # set up position in dict
-        self.position_environment = position_environment
-        self.position_environment.set_new_position_in_dict(self.name_id, self.position_x, self.position_y, self.width, self.height)
+        # set up position
+        self.position_environment.set_new_position_in_dict(self.name_id, self.position_x, self.position_y,
+                                                           self.width, self.height)
+
+    def get_position_player(self):
+        # get position player
+        self.player_position_x, self.player_position_y, self.width, \
+            self.height = self.position_environment.get_position_player()
 
     def move_left(self):
         self.position_x -= self.speed//2
@@ -33,17 +38,13 @@ class Enemy(Object):
         self.position_y += self.speed//2
         self.draw()
 
-    def get_new_position(self):
-        # get position from position_player
-        self.player_position_x, self.player_position_y, self.width, self.height = self.position_environment.get_position_player()
-
     def movement(self):
-        # get the position
-        self.get_new_position()
+        # get the direction
+        self.get_position_player()
 
         # check if collision
-        if self.position_environment.check_if_enemy_collision(self.name_id, self.position_x, self.position_y, self.width,
-                                                              self.height):
+        if self.position_environment.check_if_enemy_collision(self.name_id, self.position_x, self.position_y,
+                                                              self.width, self.height):
             print()
         # if not, move
         else:
@@ -57,8 +58,9 @@ class Enemy(Object):
             if self.player_position_y < self.position_y:
                 self.move_up()
 
-            # inform the dict the new position
+            # new position
             self.set_new_positon()
 
     def set_new_positon(self):
-        self.position_environment.set_new_position_in_dict(self.name_id, self.position_x, self.position_y, self.width, self.height)
+        self.position_environment.set_new_position_in_dict(self.name_id, self.position_x, self.position_y,
+                                                           self.width, self.height)

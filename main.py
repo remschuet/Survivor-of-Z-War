@@ -1,27 +1,22 @@
 import pygame
 from management_canvas import ManagementCanvas
 
-"""
-    REFACTORING
-"""
 
 pygame.init()
 
-# init the constant variable
+# variable for dimension screen
 ROOT_WIDTH = 900
 ROOT_HEIGHT = 600
 
-# timer_create_enemy = 1000
-
-# create root and the background root
+# create root
 root = pygame.display.set_mode((ROOT_WIDTH, ROOT_HEIGHT))
 pygame.display.set_caption("Game")
 
 # create the clock (timer)
 clock = pygame.time.Clock()
 
-
 launched = True
+# create management canvas to display information
 management_canvas = ManagementCanvas(root, clock, launched, ROOT_WIDTH, ROOT_HEIGHT)
 management_canvas.create_management_menu_environment()
 
@@ -29,7 +24,7 @@ while launched:
     # reset the screen to black
     root.fill((0, 0, 0))
 
-    # (fps) speed of the mouvement
+    # fps
     clock.tick(120)
 
     # verify if the game is launch
