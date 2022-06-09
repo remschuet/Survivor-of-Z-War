@@ -45,14 +45,13 @@ class ManagementEnvironment:
         self.player_image_pv_2 = pygame.image.load("player_pv_2.png")
         self.player_image_pv_1 = pygame.image.load("player_pv_1.png")
 
-
         # set up sound
         self.sound = Sounds()
 
         # set up environment
         self.position_environment = PositionEnvironment(player_pv)
         # set up player
-        self.player = Player(self.root, "player", "player", 400, 250,
+        self.player = Player(self.root, "player_yellow", "player", 400, 250,
                              self.HUMAN_WIDTH, self.HUMAN_HEIGHT, self.HUMAN_SPEED, self.position_environment)
 
     def random_position_of_enemy(self):

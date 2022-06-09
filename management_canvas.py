@@ -1,5 +1,6 @@
 import pygame
 from management_gameplay_environment import ManagementEnvironment
+from management_menu_environment import ManagementMenuEnvironment
 
 
 class ManagementCanvas:
@@ -10,6 +11,7 @@ class ManagementCanvas:
         self.OBJECT_HEIGHT = 80
         self.OBJECT_SPEED = 2
 
+        self.management_menu_environment = None
         self.management_environment = None
 
         # call every x milliseconds
@@ -31,6 +33,10 @@ class ManagementCanvas:
         self.root_background_image_menu = pygame.transform.scale(self.root_background_image_menu,
                                                                  (self.ROOT_WIDTH, self.ROOT_HEIGHT))
 
+    def create_management_menu_environment(self):
+        # create zombie in main menu
+        self.management_menu_environment = ManagementMenuEnvironment(self.root, self.ROOT_WIDTH, self.ROOT_HEIGHT)
+
     def create_management_environment(self):
         # create all the enemy, player, bullet
         self.management_environment = ManagementEnvironment(self.root, self.OBJECT_WIDTH, self.OBJECT_HEIGHT,
@@ -51,6 +57,7 @@ class ManagementCanvas:
             # check if player died
             self.management_player_alive_or_not()
         elif self.root_menu:
+            self.management_menu_environment.move_zombie()
             self.check_event_key_in_menu()
         # draw everything
         self.management_draw()
@@ -60,13 +67,20 @@ class ManagementCanvas:
             # quit the game
             if event.type == pygame.QUIT:
                 self.launched = False
-            # to start game
+
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_1:
-                    print("start")
+                # to start game
+                if event.key == pygame.K_SPACE:
                     self.root_gameplay = True
                     self.root_menu = False
                     self.create_management_environment()
+                # to change color of player
+                elif event.key == pygame.K_1:
+                    self.management_menu_environment.set_player_color(1)
+                elif event.key == pygame.K_2:
+                    self.management_menu_environment.set_player_color(2)
+                elif event.key == pygame.K_3:
+                    self.management_menu_environment.set_player_color(3)
 
     def check_event_key_in_gameplay(self):
         for event in pygame.event.get():
@@ -105,3 +119,4 @@ class ManagementCanvas:
             self.management_environment.draw_player_pv()
         elif self.root_menu:
             self.root.blit(self.root_background_image_menu, [0, 0])
+            self.management_menu_environment.draw_zombie_menu()

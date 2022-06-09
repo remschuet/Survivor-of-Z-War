@@ -28,6 +28,8 @@ clock = pygame.time.Clock()
 
 launched = True
 management_canvas = ManagementCanvas(root, clock, launched, ROOT_WIDTH, ROOT_HEIGHT)
+management_canvas.create_management_menu_environment()
+
 while launched:
     # reset the screen to black
     root.fill((0, 0, 0))
