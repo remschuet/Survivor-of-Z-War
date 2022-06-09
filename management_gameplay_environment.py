@@ -111,6 +111,10 @@ class ManagementEnvironment:
             elif self.number_of_enemy > 10:
                 self.create_enemy()
                 self.create_enemy()
+            elif self.number_of_enemy > 30:
+                self.create_enemy()
+                self.create_enemy()
+                self.create_enemy()
 
     def create_enemy(self):
         self.number_of_enemy += 1
