@@ -39,11 +39,18 @@ class ManagementEnvironment:
         self.number_of_box_ammo = 0
         self.number_chance_box_ammo = 6
 
+        # player pv
+        player_pv = 3
+        self.player_image_pv_3 = pygame.image.load("player_pv_3.png")
+        self.player_image_pv_2 = pygame.image.load("player_pv_2.png")
+        self.player_image_pv_1 = pygame.image.load("player_pv_1.png")
+
+
         # set up sound
         self.sound = Sounds()
 
         # set up environment
-        self.position_environment = PositionEnvironment()
+        self.position_environment = PositionEnvironment(player_pv)
         # set up player
         self.player = Player(self.root, "player", "player", 400, 250,
                              self.HUMAN_WIDTH, self.HUMAN_HEIGHT, self.HUMAN_SPEED, self.position_environment)
@@ -66,14 +73,20 @@ class ManagementEnvironment:
         self.create_enemy_every_2_sec()
         self.create_box_ammo()
 
+    def random_position_box_ammo(self):
+        x = random.randint(100, 800)
+        y = random.randint(100, 500)
+        return x, y
+
     def create_box_ammo(self):
         if not self.box_ammo_list:
             create_box_ammo = random.randint(1, self.number_chance_box_ammo)
             if create_box_ammo == 1:
                 self.number_of_box_ammo += 1
+                x, y = self.random_position_box_ammo()
                 self.box_ammo_list.append(
-                    BoxAmmo(self.root, "ammo", "box_ammo" + str(self.number_of_box_ammo), 20, 200, self.HUMAN_WIDTH, self.HUMAN_HEIGHT,
-                            self.HUMAN_SPEED, self.position_environment))
+                    BoxAmmo(self.root, "ammo", "box_ammo" + str(self.number_of_box_ammo), x, y, self.HUMAN_WIDTH,
+                            self.HUMAN_HEIGHT, self.HUMAN_SPEED, self.position_environment))
 
     def create_enemy_every_2_sec(self):
         # create enemy
@@ -174,6 +187,19 @@ class ManagementEnvironment:
         # draw ammo left in the screen
         ammo_left = self.arial_font_bold.render(f"{self.number_of_ammo} ammo", True, (255, 0, 0), (182, 182, 182))
         self.root.blit(ammo_left, [20, 20])
+
+    def draw_player_pv(self):
+        # draw player pv in the screen
+        number_of_pv = self.position_environment.get_player_pv()
+        if number_of_pv == 3:
+            self.player_image_pv_3 = pygame.transform.scale(self.player_image_pv_3, (150, 50))
+            self.root.blit(self.player_image_pv_3, (370, 0))
+        elif number_of_pv == 2:
+            self.player_image_pv_2 = pygame.transform.scale(self.player_image_pv_2, (150, 50))
+            self.root.blit(self.player_image_pv_2, (370, 0))
+        elif number_of_pv == 1:
+            self.player_image_pv_1 = pygame.transform.scale(self.player_image_pv_1, (150, 50))
+            self.root.blit(self.player_image_pv_1, (370, 0))
 
     def create_bullet(self):
         if self.number_of_ammo >= 1:

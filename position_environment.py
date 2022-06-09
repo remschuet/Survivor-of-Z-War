@@ -1,5 +1,5 @@
 class PositionEnvironment:
-    def __init__(self):
+    def __init__(self, player_pv):
         # dictionary for object name: x, y, w, h
         self.object_position_dict = {}
         # list to know enemy need to destroy
@@ -11,11 +11,14 @@ class PositionEnvironment:
         # for the opponent collision
         self.opponent_object = None
         # player pv
-        self.player_pv = 2
+        self.player_pv = player_pv
         # bool to know if alive
         self.player_alive = True
         # list of every possibility of box ammo
         self.possibility_box_ammo = ["box_ammo1", "2"]
+
+    def get_player_pv(self):
+        return self.player_pv
 
     def get_box_ammo_to_destroy(self):
         return self.box_ammo_image_need_to_destroy
@@ -36,9 +39,9 @@ class PositionEnvironment:
         self.box_ammo_image_need_to_destroy = True
 
     def manage_player_pv(self):
-        if self.player_pv > 0:
+        if self.player_pv > 1:
             self.player_pv -= 1
-        elif self.player_pv <= 0:
+        elif self.player_pv <= 1:
             self.player_alive = False
 
     def set_new_position_in_dict(self, name, position_x, position_y, width, height):

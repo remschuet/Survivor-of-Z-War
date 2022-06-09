@@ -6,15 +6,8 @@ from management_canvas import ManagementCanvas
     mettre un system de point de vie visuel
     dessin de carte avec des murs et des entrées pour les enemy
     bouger les enemy sur le menu
-    apparaitre box ammo aléatoirement
-    mettre methode dans plusieurs fichiers différents
-    image enemy aléatoire
-    image lorsque l on bouge
-    particules?
     player pv in the player and not in the position environment
     
-    enemy ne meurt pas avec le touché d une boite
-    random lieu de l apparition de la boite
 """
 
 pygame.init()
