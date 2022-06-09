@@ -44,7 +44,8 @@ class Enemy(Object):
         # check if collision
         if self.position_environment.check_if_enemy_collision(self.name_id, self.position_x, self.position_y, self.width,
                                                               self.height):
-            print("collision")
+            print()
+        # if not, move
         else:
             # move to the player position x, y
             if self.player_position_x >= self.position_x:

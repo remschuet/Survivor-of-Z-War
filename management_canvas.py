@@ -124,6 +124,8 @@ class ManagementCanvas:
             self.management_environment.draw_informations(self.clock)
             # draw player pv
             self.management_environment.draw_player_pv()
+            # draw score
+            self.management_environment.draw_score()
         elif self.root_menu:
             self.root.blit(self.root_background_image_menu, [0, 0])
             self.management_menu_environment.draw_zombie_menu()

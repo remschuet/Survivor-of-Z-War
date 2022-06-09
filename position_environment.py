@@ -58,8 +58,12 @@ class PositionEnvironment:
             if name_id != self.opponent_object and self.opponent_object != "enemy"+all_number_to_100 \
                     and self.opponent_object != "box_ammo1" and self.opponent_object != "box_ammo2" \
                     and self.opponent_object != "box_ammo3" and self.opponent_object != "box_ammo4"\
-                    and self.opponent_object != "box_ammo5" and self.opponent_object != "box_ammo6"\
-                    and self.opponent_object != "box_ammo7" and self.opponent_object != "box_ammo8":
+                    and self.opponent_object != "box_ammo5" and self.opponent_object != "box_ammo6" \
+                    and self.opponent_object != "box_ammo7" and self.opponent_object != "box_ammo8" \
+                    and self.opponent_object != "box_ammo9" and self.opponent_object != "box_ammo10" \
+                    and self.opponent_object != "box_ammo11" and self.opponent_object != "box_ammo12" \
+                    and self.opponent_object != "box_ammo13" and self.opponent_object != "box_ammo14"\
+                    and self.opponent_object != "box_ammo15":
                 if position_x + width >= x and \
                         position_x <= x + w and \
                         position_y + height >= y and \
@@ -85,5 +89,4 @@ class PositionEnvironment:
                         position_x <= x + w and \
                         position_y + height >= y and \
                         position_y <= y + h:
-                    print("player collision with ammo")
                     self.box_ammo_image_need_to_destroy.append(name_id)

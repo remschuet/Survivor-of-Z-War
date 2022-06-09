@@ -4,7 +4,9 @@ from management_canvas import ManagementCanvas
 """
     REFACTORING
     dessin de carte avec des murs et des entrées pour les enemy
-    system de point en kill
+    collision avec tout les trucs
+    infini enemy
+    
 """
 
 pygame.init()
