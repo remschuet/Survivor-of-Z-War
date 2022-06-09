@@ -5,9 +5,8 @@ from management_canvas import ManagementCanvas
     REFACTORING
     mettre un system de point de vie visuel
     dessin de carte avec des murs et des entrées pour les enemy
-    bouger les enemy sur le menu
-    player pv in the player and not in the position environment
-    
+    couleur joueur qui est dans le gameplay
+    changer couleurs avec les flèches
 """
 
 pygame.init()
