@@ -11,7 +11,7 @@ from sounds import Sounds
 
 
 class ManagementEnvironment:
-    def __init__(self, root, OBJECT_WIDTH, OBJECT_HEIGHT, OBJECT_SPEED, ROOT_WIDTH, ROOT_HEIGHT, player_color):
+    def __init__(self, root, OBJECT_WIDTH, OBJECT_HEIGHT, OBJECT_SPEED, ROOT_WIDTH, ROOT_HEIGHT, player_color, score_total):
         self.root = root
         self.OBJECT_WIDTH = OBJECT_WIDTH
         self.OBJECT_HEIGHT = OBJECT_HEIGHT
@@ -41,7 +41,7 @@ class ManagementEnvironment:
         self.number_chance_box_ammo = 7
 
         # init the score to 0
-        self.score_total = 0
+        self.score_total = score_total
 
         # player pv
         player_pv = 3

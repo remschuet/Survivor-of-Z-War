@@ -11,6 +11,9 @@ class ManagementCanvas:
         self.OBJECT_HEIGHT = 80
         self.OBJECT_SPEED = 2
 
+        self.score_total = 0
+        self.best_score = 0
+
         # for the player color
         self.player_color = "yellow"
 
@@ -38,13 +41,15 @@ class ManagementCanvas:
 
     def create_management_menu_environment(self):
         # create zombie in main menu
-        self.management_menu_environment = ManagementMenuEnvironment(self.root, self.ROOT_WIDTH, self.ROOT_HEIGHT)
+        self.management_menu_environment = ManagementMenuEnvironment(self.root, self.ROOT_WIDTH, self.ROOT_HEIGHT, self.best_score)
 
     def create_management_environment(self):
+        # score total to 0
+        self.score_total = 0
         # create all the enemy, player, bullet
         self.management_environment = ManagementEnvironment(self.root, self.OBJECT_WIDTH, self.OBJECT_HEIGHT,
                                                             self.OBJECT_SPEED, self.ROOT_WIDTH, self.ROOT_HEIGHT,
-                                                            self.player_color)
+                                                            self.player_color, self.score_total)
 
     def call_every_frame(self):
         if self.root_gameplay:
@@ -61,10 +66,18 @@ class ManagementCanvas:
             # check if player died
             self.management_player_alive_or_not()
         elif self.root_menu:
+            self.set_new_best_score()
             self.management_menu_environment.move_zombie()
             self.check_event_key_in_menu()
         # draw everything
         self.management_draw()
+
+    def set_new_best_score(self):
+        if self.management_environment is not None:
+            self.score_total = self.management_environment.get_score_total()
+        if self.score_total >= self.best_score:
+            self.best_score = self.score_total
+        self.management_menu_environment.set_best_score(self.best_score)
 
     def check_event_key_in_menu(self):
         for event in pygame.event.get():
@@ -129,3 +142,4 @@ class ManagementCanvas:
         elif self.root_menu:
             self.root.blit(self.root_background_image_menu, [0, 0])
             self.management_menu_environment.draw_zombie_menu()
+            self.management_menu_environment.draw_best_score()
