@@ -11,6 +11,9 @@ class ManagementCanvas:
         self.OBJECT_HEIGHT = 80
         self.OBJECT_SPEED = 2
 
+        # for the player color
+        self.player_color = "yellow"
+
         self.management_menu_environment = None
         self.management_environment = None
 
@@ -25,11 +28,11 @@ class ManagementCanvas:
         self.clock = clock
         self.launched = launched
 
-        self.root_background_image_gameplay = pygame.image.load("background_game.png")
+        self.root_background_image_gameplay = pygame.image.load("asset/image/background_game.png")
         self.root_background_image_gameplay = pygame.transform.scale(self.root_background_image_gameplay,
                                                                      (self.ROOT_WIDTH, self.ROOT_HEIGHT))
 
-        self.root_background_image_menu = pygame.image.load("background_menu.png")
+        self.root_background_image_menu = pygame.image.load("asset/image/background_menu.png")
         self.root_background_image_menu = pygame.transform.scale(self.root_background_image_menu,
                                                                  (self.ROOT_WIDTH, self.ROOT_HEIGHT))
 
@@ -40,7 +43,8 @@ class ManagementCanvas:
     def create_management_environment(self):
         # create all the enemy, player, bullet
         self.management_environment = ManagementEnvironment(self.root, self.OBJECT_WIDTH, self.OBJECT_HEIGHT,
-                                                            self.OBJECT_SPEED, self.ROOT_WIDTH, self.ROOT_HEIGHT)
+                                                            self.OBJECT_SPEED, self.ROOT_WIDTH, self.ROOT_HEIGHT,
+                                                            self.player_color)
 
     def call_every_frame(self):
         if self.root_gameplay:
@@ -77,10 +81,13 @@ class ManagementCanvas:
                 # to change color of player
                 elif event.key == pygame.K_1:
                     self.management_menu_environment.set_player_color(1)
+                    self.player_color = "yellow"
                 elif event.key == pygame.K_2:
                     self.management_menu_environment.set_player_color(2)
+                    self.player_color = "green"
                 elif event.key == pygame.K_3:
                     self.management_menu_environment.set_player_color(3)
+                    self.player_color = "purple"
 
     def check_event_key_in_gameplay(self):
         for event in pygame.event.get():

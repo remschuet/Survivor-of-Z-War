@@ -3,10 +3,8 @@ from management_canvas import ManagementCanvas
 
 """
     REFACTORING
-    mettre un system de point de vie visuel
     dessin de carte avec des murs et des entrées pour les enemy
-    couleur joueur qui est dans le gameplay
-    changer couleurs avec les flèches
+    system de point en kill
 """
 
 pygame.init()

@@ -14,7 +14,7 @@ class ZombieMenu:
 
         self.direction = "right"
 
-        self.object_image = pygame.image.load("enemy_zombie_idle.png")
+        self.object_image = pygame.image.load("asset/image/enemy_zombie_idle.png")
         self.object_image = pygame.transform.scale(self.object_image, (self.width, self.height))
 
     def mouvement(self):

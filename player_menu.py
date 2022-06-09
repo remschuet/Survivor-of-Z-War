@@ -10,16 +10,16 @@ class PlayerMenu:
         self.height = height
         self.object_image = None
 
-        self.player_color = "player_yellow_idle.png"
+        self.player_color = "asset/image/player_yellow_idle.png"
         self.resize_image()
 
     def set_new_color(self, number: int):
         if number == 1:
-            self.player_color = "player_yellow_idle.png"
+            self.player_color = "asset/image/player_yellow_idle.png"
         elif number == 2:
-            self.player_color = "player_green_idle.png"
+            self.player_color = "asset/image/player_green_idle.png"
         elif number == 3:
-            self.player_color = "player_purple_idle.png"
+            self.player_color = "asset/image/player_purple_idle.png"
         self.resize_image()
 
     def resize_image(self):

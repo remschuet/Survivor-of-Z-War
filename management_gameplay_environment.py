@@ -11,13 +11,14 @@ from sounds import Sounds
 
 
 class ManagementEnvironment:
-    def __init__(self, root, HUMAN_WIDTH, HUMAN_HEIGHT, HUMAN_SPEED, ROOT_WIDTH, ROOT_HEIGHT):
+    def __init__(self, root, HUMAN_WIDTH, HUMAN_HEIGHT, HUMAN_SPEED, ROOT_WIDTH, ROOT_HEIGHT, player_color):
         self.root = root
         self.HUMAN_WIDTH = HUMAN_WIDTH
         self.HUMAN_HEIGHT = HUMAN_HEIGHT
         self.HUMAN_SPEED = HUMAN_SPEED
         self.ROOT_WIDTH = ROOT_WIDTH
         self.ROOT_HEIGHT = ROOT_HEIGHT
+        self.player_color = str(player_color)
 
         # create writing style
         self.arial_font = pygame.font.SysFont("arial", 25)
@@ -33,17 +34,17 @@ class ManagementEnvironment:
 
         # to manage ammo
         self.box_ammo_list = []
-        self.number_of_ammo = 15
+        self.number_of_ammo = 12
 
         # number of box ammo
         self.number_of_box_ammo = 0
-        self.number_chance_box_ammo = 6
+        self.number_chance_box_ammo = 8
 
         # player pv
         player_pv = 3
-        self.player_image_pv_3 = pygame.image.load("player_pv_3.png")
-        self.player_image_pv_2 = pygame.image.load("player_pv_2.png")
-        self.player_image_pv_1 = pygame.image.load("player_pv_1.png")
+        self.player_image_pv_3 = pygame.image.load("asset/image/player_pv_3.png")
+        self.player_image_pv_2 = pygame.image.load("asset/image/player_pv_2.png")
+        self.player_image_pv_1 = pygame.image.load("asset/image/player_pv_1.png")
 
         # set up sound
         self.sound = Sounds()
@@ -51,7 +52,7 @@ class ManagementEnvironment:
         # set up environment
         self.position_environment = PositionEnvironment(player_pv)
         # set up player
-        self.player = Player(self.root, "player_yellow", "player", 400, 250,
+        self.player = Player(self.root, "player_"+self.player_color, "player", 400, 250,
                              self.HUMAN_WIDTH, self.HUMAN_HEIGHT, self.HUMAN_SPEED, self.position_environment)
 
     def random_position_of_enemy(self):
