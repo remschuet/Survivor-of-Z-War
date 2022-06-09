@@ -20,6 +20,8 @@ class PlayerMenu:
             self.player_color = "asset/image/player_green_idle.png"
         elif number == 3:
             self.player_color = "asset/image/player_purple_idle.png"
+        elif number == 4:
+            self.player_color = "asset/image/player_blue_idle.png"
         self.resize_image()
 
     def resize_image(self):

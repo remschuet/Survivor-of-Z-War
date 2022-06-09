@@ -6,7 +6,6 @@ from management_canvas import ManagementCanvas
     dessin de carte avec des murs et des entrées pour les enemy
     collision avec tout les trucs
     infini enemy
-    
 """
 
 pygame.init()

@@ -66,8 +66,11 @@ class ManagementCanvas:
             # check if player died
             self.management_player_alive_or_not()
         elif self.root_menu:
+            # set up best score
             self.set_new_best_score()
+            # move zombie
             self.management_menu_environment.move_zombie()
+            # check key event
             self.check_event_key_in_menu()
         # draw everything
         self.management_draw()
@@ -101,6 +104,9 @@ class ManagementCanvas:
                 elif event.key == pygame.K_3:
                     self.management_menu_environment.set_player_color(3)
                     self.player_color = "purple"
+                elif event.key == pygame.K_4:
+                    self.management_menu_environment.set_player_color(4)
+                    self.player_color = "blue"
 
     def check_event_key_in_gameplay(self):
         for event in pygame.event.get():
